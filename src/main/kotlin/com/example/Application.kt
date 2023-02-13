@@ -1,5 +1,7 @@
 package com.example
 
+import com.example.database.DAOFacade
+import com.example.database.DAOFacadeImpl
 import com.example.database.DatabaseFactory
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -7,6 +9,7 @@ import io.ktor.server.netty.*
 import com.example.plugins.*
 import io.ktor.server.velocity.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.runBlocking
 import org.apache.velocity.runtime.RuntimeConstants
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
 
@@ -24,5 +27,13 @@ fun Application.module() {
     install(Velocity) {
         setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name);
+    }
+
+    DAOFacadeImpl().apply {
+        runBlocking {
+            if(getAllStudents().isEmpty()){
+                addStudents(1,"Bui","Toan","IFA12a","12.12.1998", "tony.bui267@gmail.com")
+            }
+        }
     }
 }

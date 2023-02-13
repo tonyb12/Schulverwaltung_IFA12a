@@ -62,18 +62,10 @@ class DAOFacadeImpl : DAOFacade {
                 it[Students.lastname] = lastname;
                 it[Students.class_name] = class_name;
                 it[Students.birthday] = birthday;
-                it[Students.email] = birthday;
+                it[Students.email] = email;
         }
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToStudent)
     }
 
 
-}
-
-val dao : DAOFacade = DAOFacadeImpl().apply {
-    runBlocking {
-        if(getAllStudents().isEmpty()){
-            addStudents(1,"Bui","Toan","IFA12a","12.12.1998", "tony.bui267@gmail.com")
-        }
-    }
 }
