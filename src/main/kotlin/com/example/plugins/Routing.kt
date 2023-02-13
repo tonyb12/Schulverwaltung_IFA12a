@@ -1,5 +1,7 @@
 package com.example.plugins
 
+import com.example.database.dao
+import com.example.model.Student.Students.id
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.application.*
@@ -11,10 +13,16 @@ fun Application.configureRouting() {
             call.respondText("Hello World!")
         }
 
-        get("/user"){
+        get("/students"){
 
-            val user = Student()
-            call.respond(VelocityContent("templates/index.vl", mapOf("user" to user)));
+            call.respond(VelocityContent("templates/index.vl", mapOf("student" to dao.getAllStudents())));
         }
+
+       // get("/student?{$id}"){
+
+        //    val id = call.parameters["id"]?.toInt()
+        //    val student = students.find { it.id == id }
+        //    call.respond(VelocityContent("templates/index.vl", mapOf("student" to dao.getStudent(call.respond(student)))))
+       // }
     }
 }

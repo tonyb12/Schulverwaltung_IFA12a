@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.database.DatabaseFactory
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -18,9 +19,10 @@ fun main() {
 }
 
 fun Application.module() {
-    configureRouting()
+    configureRouting();
+    DatabaseFactory.init();
     install(Velocity) {
-        setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath")
-        setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name)
+        setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name);
     }
 }
