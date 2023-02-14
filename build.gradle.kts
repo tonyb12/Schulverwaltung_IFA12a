@@ -2,6 +2,7 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 val exposed_version: String by project
+val kotlinCsv_version: String by project
 val h2_version: String by project
 
 plugins {
@@ -35,5 +36,5 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("mysql:mysql-connector-java:8.0.32")
-
+    implementation("com.github.doyaaaaaken:kotlin-csv-jvm:$kotlinCsv_version")
 }
