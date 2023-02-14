@@ -1,11 +1,11 @@
 package com.example
 
+import com.example.plugins.configureRouting
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import com.example.plugins.*
 import io.ktor.server.velocity.*
-import io.ktor.websocket.*
+import org.apache.velocity.app.event.implement.IncludeRelativePath
 import org.apache.velocity.runtime.RuntimeConstants
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
 
@@ -21,6 +21,7 @@ fun Application.module() {
     configureRouting()
     install(Velocity) {
         setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath")
+        setProperty(RuntimeConstants.EVENTHANDLER_INCLUDE, IncludeRelativePath::class.java.name)
         setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name)
     }
 }
