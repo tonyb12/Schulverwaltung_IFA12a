@@ -23,7 +23,6 @@ class DAOFacadeImpl : DAOFacade {
     override suspend fun getAllStudents(): List<Student> = dbQuery {
 
             Students.selectAll().map(:: resultRowToStudent)
-
     }
 
     override suspend fun getStudent(id: Int): Student? = dbQuery{
@@ -67,5 +66,21 @@ class DAOFacadeImpl : DAOFacade {
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToStudent)
     }
 
+    override suspend fun addStudent(
+        surname: String,
+        lastname: String,
+        class_name: String,
+        birthday: String,
+        email: String
+    ): ResultRow? = dbQuery {
+        val insertStatement = Students.insert {
+            it[Students.surname] = surname;
+            it[Students.lastname] = lastname;
+            it[Students.class_name] = class_name;
+            it[Students.birthday] = birthday;
+            it[Students.email] = email;
+        }
+        insertStatement.resultedValues?.singleOrNull()
+    }
 
 }
