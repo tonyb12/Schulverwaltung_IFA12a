@@ -1,0 +1,25 @@
+#parse("include/header.vm")
+<div class="container login-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="login-wrapper">
+                <div class="login-form-wrapper">
+                    <h1>Schulverwaltung Login</h1>
+                    <hr>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Benutzername</label>
+                            <input type="text" class="form-control" maxlength="50" id="username" name="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Passwort</label>
+                            <input type="password" class="form-control" maxlength="255" id="password" name="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary d-block w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+#parse("include/footer.vm")
