@@ -1,14 +1,15 @@
 #parse("include/header.vm")
+<body>
 <nav class="navbar container-fluid">
     <div class="container">
-        <div class="row w-100">
-            <div class="logo col-4 d-flex align-items-center">
-                <img class="w-100" src="/assets/logo.png" alt="Logo der Berufsschule Bayreuth">
+        <div class="row w-100 gap-20-0">
+            <div class="logo col-12 col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-start">
+                <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule Bayreuth">
             </div>
-            <div class="student col-4 d-flex align-items-center justify-content-center">
+            <div class="student col-12 col-lg-4 d-flex align-items-center justify-content-center">
                 Hallo $student.lastname $student.surname!
             </div>
-            <div class="contact col-4 d-flex align-items-center justify-content-end">
+            <div class="contact col-12 col-lg-4 d-none d-lg-flex align-items-center justify-content-end">
                 <a href="/kontakt" class="btn btn-outline-primary">Kontakt</a>
             </div>
         </div>
@@ -17,29 +18,41 @@
 
 <div class="container student-data">
     <div class="row">
-        <h2 class="color-primary">Deine Daten:</h2>
+        <h2 class="color-primary pb-3">Deine Daten:</h2>
     </div>
-    <div class="row">
-        <div class="col">
-            <span>Vorname</span>
-            <span>$student.lastname</span>
+    <div class="row gap-20-0">
+        <div class="col-12 col-md-3 d-flex flex-column">
+            <span class="color-primary"><u>Vorname:</u></span>
+            <span class="pt-3">$student.lastname</span>
         </div>
-        <div class="col">
-            <span>Nachname</span>
-            <span>$student.surname</span>
+        <div class="col-12 col-md-3 d-flex flex-column">
+            <span class="color-primary"><u>Nachname:</u></span>
+            <span class="pt-3">$student.surname</span>
         </div>
-        <div class="col">
-            <span>Geburtstag</span>
-            <span>$student.birthday</span>
+        <div class="col-12 col-md-3 d-flex flex-column">
+            <span class="color-primary"><u>Geburtstag:</u></span>
+            <span class="pt-3">$student.birthday</span>
         </div>
-        <div class="col">
-            <span>E-Mail</span>
-            <span>$student.email</span>
+        <div class="col-12 col-md-3 d-flex flex-column">
+            <span class="color-primary"><u>E-Mail:</u></span>
+            <span class="pt-3">$student.email</span>
         </div>
     </div>
 </div>
 <div class="container class-data">
-
+    <div class="row">
+        <h2 class="color-primary pb-3">Deine Klasse:</h2>
+    </div>
+    <div class="row gap-20-0">
+        <div class="col-12 col-md-3 d-flex flex-column">
+            <span class="color-primary"><u>Klasse:</u></span>
+            <span class="pt-3">$student.class_name</span>
+        </div>
+        <div class="col-12 col-md-3 d-flex flex-column">
+            <span class="color-primary"><u>Beruf:</u></span>
+            <span class="pt-3"></span>
+        </div>
+    </div>
 </div>
 
 #parse("include/footer.vm")
