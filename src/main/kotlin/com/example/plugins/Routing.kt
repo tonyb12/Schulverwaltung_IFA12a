@@ -2,7 +2,6 @@ package com.example.plugins
 
 import com.example.database.DAOFacadeImpl
 import com.example.model.Student
-import com.example.model.Student.Students.id
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.application.*
@@ -21,7 +20,7 @@ fun Application.configureRouting() {
             if (id != null) {
                 val student: Student? = dao.getStudent(id.toInt())
                 student ?.let {
-                    call.respond(VelocityContent("templates/users.vm", mapOf("student" to student.surname)));
+                    call.respond(VelocityContent("templates/students.vm", mapOf("student" to student)));
                 }
             } else {
 

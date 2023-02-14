@@ -5,8 +5,8 @@
             <div class="logo col-4 d-flex align-items-center">
                 <img class="w-100" src="/assets/logo.png" alt="Logo der Berufsschule Bayreuth">
             </div>
-            <div class="user col-4 d-flex align-items-center justify-content-center">
-                Hallo $user.lastname $user.surname!
+            <div class="student col-4 d-flex align-items-center justify-content-center">
+                Hallo $student.lastname $student.surname!
             </div>
             <div class="contact col-4 d-flex align-items-center justify-content-end">
                 <a href="/kontakt" class="btn btn-outline-primary">Kontakt</a>
@@ -15,26 +15,26 @@
     </div>
 </nav>
 
-<div class="container user-data">
+<div class="container student-data">
     <div class="row">
         <h2 class="color-primary">Deine Daten:</h2>
     </div>
     <div class="row">
         <div class="col">
             <span>Vorname</span>
-            <span>$user.lastname</span>
+            <span>$student.lastname</span>
         </div>
         <div class="col">
             <span>Nachname</span>
-            <span>$user.surname</span>
+            <span>$student.surname</span>
         </div>
         <div class="col">
             <span>Geburtstag</span>
-            <span>$user.birthday</span>
+            <span>$student.birthday</span>
         </div>
         <div class="col">
             <span>E-Mail</span>
-            <span>$user.email</span>
+            <span>$student.email</span>
         </div>
     </div>
 </div>

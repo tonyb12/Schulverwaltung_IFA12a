@@ -16,4 +16,14 @@ data class Student(val id : Int, val surname: String, val lastname: String, val 
         override val primaryKey = PrimaryKey(id)
     }
 
+    fun getUsername() : String{
+
+        return createUsername();
+    }
+
+    private fun createUsername() : String{
+
+        return surname.substring(0,3) + lastname.substring(0,3) + birthday;
+    }
+
 }
