@@ -21,12 +21,15 @@ fun Application.configureRouting() {
             if (id != null) {
                 val student: Student? = dao.getStudent(id.toInt())
                 student ?.let {
-                    call.respond(VelocityContent("templates/index.vl", mapOf("student" to student.surname)));
+                    call.respond(VelocityContent("templates/users.vm", mapOf("student" to student.surname)));
                 }
             } else {
 
             }
-
+        }
+        static("assets") {
+            staticRootFolder = File("src/main/resources/assets")
+            files(".")
         }
     }
 }
