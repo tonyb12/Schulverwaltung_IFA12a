@@ -9,7 +9,7 @@
                 </a>
             </div>
             <div class="student col-12 col-lg-4 d-flex align-items-center justify-content-center">
-                Hallo $student.lastname $student.surname!
+                Hallo $student.firstName $student.surName!
             </div>
             <div class="contact col-12 col-lg-4 d-none d-lg-flex align-items-center justify-content-end">
                 <a href="https://www.bs1-bt.de/allgemeines/kontakt" target="_blank" class="btn btn-outline-primary">Kontakt</a>
@@ -25,11 +25,11 @@
     <div class="row gap-20-0">
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Vorname:</u></span>
-            <span class="pt-3">$student.lastname</span>
+            <span class="pt-3">$student.firstName</span>
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Nachname:</u></span>
-            <span class="pt-3">$student.surname</span>
+            <span class="pt-3">$student.surName</span>
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Geburtstag:</u></span>
@@ -48,7 +48,7 @@
     <div class="row gap-20-0">
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Klasse:</u></span>
-            <span class="pt-3">$student.class_name</span>
+            <span class="pt-3">$student.className</span>
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Beruf:</u></span>
