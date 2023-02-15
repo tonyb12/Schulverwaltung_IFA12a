@@ -1,25 +1,23 @@
 package com.example
 
+import com.example.controllers.StudentController
 import com.example.data.CSVTest
-import com.example.database.DAOFacade
-import com.example.database.DAOFacadeImpl
-import com.example.database.DatabaseFactory
+import com.example.database.exposed.ExposedDb
+import com.example.database.objects.Students
+import com.example.model.Student
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import com.example.plugins.*
 import io.ktor.server.velocity.*
-import io.ktor.websocket.*
-import kotlinx.coroutines.*
 import org.apache.velocity.runtime.RuntimeConstants
 import org.apache.velocity.app.event.implement.IncludeRelativePath
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-import java.io.ByteArrayInputStream
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
-import java.nio.charset.Charset
 
 fun main() {
-
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
         configureRouting();
         module()
@@ -27,33 +25,29 @@ fun main() {
 }
 
 fun Application.module() {
-
-    DatabaseFactory.init();
-    val studentsFacade = DAOFacadeImpl()
-
-    if (false) {
-        val csvTest = CSVTest()
-        val filePath = ""
-        val file = File(filePath)
-        val inputStream = file.inputStream()
-        val parsedData = csvTest.readCsv(inputStream)
-
-        launch {
-            studentsFacade.apply {
-                parsedData.map {
-                    val addedStudent = async { addStudent(it.surname, it.lastname, it.class_name, it.birthday, it.email) }
-                    delay(10000)
-                    System.out.println(addedStudent.await())
-                }
-            }
-        }
-    }
-
     install(Velocity) {
         setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         setProperty(RuntimeConstants.EVENTHANDLER_INCLUDE, IncludeRelativePath::class.java.name)
         setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name);
         setProperty("input.encoding", "UTF-8");
         setProperty("output.encoding", "UTF-8");
+    }
+}
+fun Application.database() {
+    transaction(ExposedDb.connection) {
+        SchemaUtils.create(Students)
+    }
+}
+fun Application.csv() {
+    val studentController = StudentController()
+
+    val csvTest = CSVTest()
+    val filePath = "C:\\Users\\nh46\\Downloads\\export.csv"
+    val file = File(filePath)
+    val inputStream = file.inputStream()
+    val parsedData = csvTest.readCsv(inputStream)
+
+    parsedData.map {
+        studentController.add(Student(0, it.firstName, it.surName, it.className, it.birthday, it.email))
     }
 }

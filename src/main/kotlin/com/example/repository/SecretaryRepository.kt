@@ -1,11 +1,15 @@
-package com.example.controllers
+package com.example.repository
 
-import com.example.controllers.interfaces.ISecretaryController
+import com.example.repository.interfaces.ISecretaryRepository
 import com.example.model.Secretary
-import com.example.unitofwork.UnitOfWork
+import org.jetbrains.exposed.sql.Database
 
-class SecretaryController : ISecretaryController{
-    private val _unitOfWork: UnitOfWork = UnitOfWork()
+class SecretaryRepository : ISecretaryRepository {
+    private val connection: Database
+    constructor(connection: Database) {
+        this.connection = connection
+    }
+
     override fun getAll(): List<Secretary> {
         TODO("Not yet implemented")
     }
@@ -15,10 +19,6 @@ class SecretaryController : ISecretaryController{
     }
 
     override fun add(entity: Secretary): Secretary {
-        TODO("Not yet implemented")
-    }
-
-    override fun add(entity: List<Secretary>): List<Secretary> {
         TODO("Not yet implemented")
     }
 
@@ -37,4 +37,5 @@ class SecretaryController : ISecretaryController{
     override fun deleteAll(): Int {
         TODO("Not yet implemented")
     }
+
 }
