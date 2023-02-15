@@ -10,7 +10,7 @@
                 Hallo $student.lastname $student.surname!
             </div>
             <div class="contact col-12 col-lg-4 d-none d-lg-flex align-items-center justify-content-end">
-                <a href="/kontakt" class="btn btn-outline-primary">Kontakt</a>
+                <a href="https://www.bs1-bt.de/allgemeines/kontakt" target="_blank" class="btn btn-outline-primary">Kontakt</a>
             </div>
         </div>
     </div>

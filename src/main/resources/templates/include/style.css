@@ -26,8 +26,8 @@
 
 @font-face {
     font-family: 'Gill Sans MT';
-    src: url('assets/webfont/GillSansMT.woff2') format('woff2'),
-    url('assets/webfont/GillSansMT.woff') format('woff');
+    src: url('../../assets/webfont/GillSansMT.woff2') format('woff2'),
+    url('../../assets/webfont/GillSansMT.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
