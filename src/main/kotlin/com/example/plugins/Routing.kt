@@ -14,6 +14,9 @@ fun Application.configureRouting() {
         get("/") {
             call.respond(VelocityContent("templates/login.vm", mapOf()))
         }
+        get("/secretary") {
+            call.respond(VelocityContent("templates/secretary.vm", mapOf()))
+        }
         get("/students/{id}"){
             val dao = DAOFacadeImpl()
             val id = call.parameters["id"]
