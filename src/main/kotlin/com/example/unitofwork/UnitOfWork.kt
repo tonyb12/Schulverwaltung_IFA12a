@@ -8,9 +8,16 @@ import com.example.repository.interfaces.IStudentRepository
 import org.jetbrains.exposed.sql.Database
 
 class UnitOfWork {
-    private val _databaseConnection: Database = ExposedDb.connection
+    private val _databaseConnection: Database
     private var _secretaryRepository: ISecretaryRepository? = null
     private var _studentRepository: IStudentRepository? = null
+
+    constructor() {
+        this._databaseConnection = ExposedDb.connection
+    }
+    constructor(databaseConnection: Database) {
+        this._databaseConnection = databaseConnection
+    }
     val secretaryRepository: ISecretaryRepository
         get(): ISecretaryRepository {
             if (_secretaryRepository == null) {

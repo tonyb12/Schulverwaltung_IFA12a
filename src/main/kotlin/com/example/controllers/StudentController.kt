@@ -1,6 +1,7 @@
 package com.example.controllers
 
 import com.example.controllers.interfaces.IStudentController
+import com.example.database.exposed.ExposedDb
 import com.example.model.Student
 import com.example.unitofwork.UnitOfWork
 
