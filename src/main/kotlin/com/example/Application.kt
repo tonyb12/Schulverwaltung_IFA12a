@@ -53,5 +53,7 @@ fun Application.module() {
         setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         setProperty(RuntimeConstants.EVENTHANDLER_INCLUDE, IncludeRelativePath::class.java.name)
         setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name);
+        setProperty("input.encoding", "UTF-8");
+        setProperty("output.encoding", "UTF-8");
     }
 }

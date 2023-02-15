@@ -12,7 +12,7 @@ import java.io.File
 fun Application.configureRouting() {
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            call.respond(VelocityContent("templates/login.vm", mapOf()))
         }
         get("/students/{id}"){
             val dao = DAOFacadeImpl()

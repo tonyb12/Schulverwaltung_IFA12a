@@ -4,7 +4,9 @@
     <div class="container">
         <div class="row w-100 gap-20-0">
             <div class="logo col-12 col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-start">
-                <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule Bayreuth">
+                <a href="https://www.bs1-bt.de/">
+                    <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule Bayreuth">
+                </a>
             </div>
             <div class="student col-12 col-lg-4 d-flex align-items-center justify-content-center">
                 Hallo $student.lastname $student.surname!

@@ -5,6 +5,7 @@
     --color-grey: #787878;
     --bs-link-color-rgb: var(--color-blue);
     --bs-link-hover-color-rgb: var(--color-darkgrey);
+    --footer-height: 70px
 }
 
 .btn-outline-primary {
@@ -66,7 +67,10 @@ body {
 /* Footer Part */
 .footer-dummy,
 .footer {
-    height: 70px;
+    height: var(--footer-height);
+}
+.footer-dummy {
+    margin-top: 40px;
 }
 .footer {
     background-color: var(--color-darkgrey);
@@ -89,4 +93,36 @@ body {
 }
 .class-data  {
     margin-bottom: 100px;
+}
+
+/* Login */
+.body-login {
+    background-image: url("../../assets/login-bg.png");
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
+.login-form-wrapper {
+    background: white;
+    border-radius: 40px;
+    border: 1px solid var(--color-grey);
+    padding: 40px 20px;
+}
+.login-form-wrapper .img-logo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+.login-form {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .login-form {
+        width: 576px;
+    }
+    .login-form-wrapper {
+        width: 768px;
+    }
 }

@@ -1,25 +1,24 @@
 #parse("include/header.vm")
-<div class="container login-wrapper">
-    <div class="row">
-        <div class="col-12">
-            <div class="login-wrapper">
-                <div class="login-form-wrapper">
-                    <h1>Schulverwaltung Login</h1>
-                    <hr>
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Benutzername</label>
-                            <input type="text" class="form-control" maxlength="50" id="username" name="username">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Passwort</label>
-                            <input type="password" class="form-control" maxlength="255" id="password" name="password">
-                        </div>
-                        <button type="submit" class="btn btn-primary d-block w-100">Login</button>
-                    </form>
-                </div>
+<body class="body-login">
+<div class="container login-wrapper d-flex flex-column align-items-center justify-content-center">
+    <h1 class="color-primary mt-5 mb-5">Schulverwaltung Login</h1>
+    <div class="login-form-wrapper d-flex flex-column align-items-center ">
+        <a href="https://www.bs1-bt.de/">
+            <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule Bayreuth">
+        </a>
+        <hr>
+        <form class="login-form d-flex flex-column align-items-center" method="POST">
+            <div class="mb-3  w-100">
+                <label for="username" class="form-label">Benutzername</label>
+                <input type="text" class="form-control" maxlength="50" id="username" name="username">
             </div>
-        </div>
+            <div class="mb-3 w-100">
+                <label for="password" class="form-label">Passwort</label>
+                <input type="password" class="form-control" maxlength="255" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-outline-primary d-block w-100 mt-3">Login</button>
+        </form>
     </div>
+    <a href="https://www.bs1-bt.de/" class="mt-5">Zurück zur Homepage</a>
 </div>
 #parse("include/footer.vm")
