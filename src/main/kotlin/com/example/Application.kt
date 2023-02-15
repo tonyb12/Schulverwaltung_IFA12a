@@ -3,6 +3,7 @@ package com.example
 import com.example.controllers.StudentController
 import com.example.data.CSVTest
 import com.example.database.exposed.ExposedDb
+import com.example.database.objects.Secretaries
 import com.example.database.objects.Students
 import com.example.model.Student
 import io.ktor.server.application.*
@@ -35,7 +36,7 @@ fun Application.module() {
 }
 fun Application.database() {
     transaction(ExposedDb.connection) {
-        SchemaUtils.create(Students)
+        SchemaUtils.create(Students, Secretaries)
     }
 }
 fun Application.csv() {

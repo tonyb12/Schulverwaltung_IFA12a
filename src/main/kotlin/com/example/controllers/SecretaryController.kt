@@ -7,15 +7,15 @@ import com.example.unitofwork.UnitOfWork
 class SecretaryController : ISecretaryController{
     private val _unitOfWork: UnitOfWork = UnitOfWork()
     override fun getAll(): List<Secretary> {
-        TODO("Not yet implemented")
+        return _unitOfWork.secretaryRepository.getAll()
     }
 
     override fun getById(id: Int): Secretary? {
-        TODO("Not yet implemented")
+        return _unitOfWork.secretaryRepository.getById(id)
     }
 
     override fun add(entity: Secretary): Secretary {
-        TODO("Not yet implemented")
+        return _unitOfWork.secretaryRepository.add(entity)
     }
 
     override fun add(entity: List<Secretary>): List<Secretary> {
@@ -23,18 +23,18 @@ class SecretaryController : ISecretaryController{
     }
 
     override fun update(entity: Secretary): Int {
-        TODO("Not yet implemented")
+        return _unitOfWork.secretaryRepository.update(entity)
     }
 
     override fun delete(entity: Secretary): Int {
-        TODO("Not yet implemented")
+        return _unitOfWork.secretaryRepository.delete(entity)
     }
 
     override fun deleteById(id: Int): Int {
-        TODO("Not yet implemented")
+        return _unitOfWork.secretaryRepository.deleteById(id)
     }
 
     override fun deleteAll(): Int {
-        TODO("Not yet implemented")
+        return _unitOfWork.secretaryRepository.deleteAll()
     }
 }
