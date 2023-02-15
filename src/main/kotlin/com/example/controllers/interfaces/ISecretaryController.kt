@@ -1,4 +1,6 @@
 package com.example.controllers.interfaces
 
-interface ISecretaryController {
+import com.example.model.Secretary
+
+interface ISecretaryController : IController<Secretary, Int> {
 }

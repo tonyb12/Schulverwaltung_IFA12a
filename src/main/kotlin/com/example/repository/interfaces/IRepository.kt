@@ -1,11 +1,11 @@
-package com.example.database
+package com.example.repository.interfaces
 
 interface IRepository <T,K>{
-    fun read(): List<T>
-    fun readById(id: K): T
-    fun create(entity: T): T
-    fun update(entity: T): T
-    fun delete(entity: T): T
-    fun deleteById(id: K): T
-
+    fun getAll(): List<T>
+    fun getById(id: K): T?
+    fun add(entity: T): T
+    fun update(entity: T): Int
+    fun delete(entity: T): Int
+    fun deleteById(id: K): Int
+    fun deleteAll(): Int
 }

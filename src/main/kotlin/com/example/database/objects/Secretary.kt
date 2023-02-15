@@ -1,4 +1,5 @@
 package com.example.database.objects
 
-object Secretary {
+import org.jetbrains.exposed.sql.Table
+object Secretary : Table() {
 }

@@ -1,4 +1,6 @@
 package com.example.controllers.interfaces
 
-interface IStudentController {
+import com.example.model.Student
+
+interface IStudentController : IController<Student, Int> {
 }

@@ -1,29 +1,17 @@
 package com.example.model
 
-import org.jetbrains.exposed.sql.Table
+import com.example.database.objects.Students
+import org.jetbrains.exposed.sql.ResultRow
 
-data class Student(val id : Int, val surname: String, val lastname: String, val class_name : String, val birthday: String, val email: String ){
-
-    object Students : Table(){
-
-        val id = integer("id").autoIncrement()
-        val surname = varchar("surname",1024)
-        val lastname = varchar("lastname", 1024)
-        val class_name = varchar("classname", 1024)
-        val birthday = varchar("birthday", 1024)
-        val email = varchar("email", 1024)
-
-        override val primaryKey = PrimaryKey(id)
+data class Student(val id : Int, val firstName: String, val surName: String, val className : String, val birthday: String, val email: String ){
+    companion object {
+        fun fromRow(row: ResultRow): Student = Student(
+                id = row[Students.id],
+                firstName = row[Students.firstName],
+                surName = row[Students.surName],
+                className = row[Students.className],
+                birthday = row[Students.birthday],
+                email = row[Students.email]
+        )
     }
-
-    fun getUsername() : String{
-
-        return createUsername();
-    }
-
-    private fun createUsername() : String{
-
-        return surname.substring(0,3) + lastname.substring(0,3) + birthday;
-    }
-
 }

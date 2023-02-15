@@ -1,4 +1,4 @@
-package com.example.database
+package com.example.repository.interfaces
 
 import com.example.model.Student
 
