@@ -5,7 +5,7 @@ import com.example.database.objects.Secretaries
 data class Secretary(val id: Int, val firstName: String, val surName: String){
     companion object {
         fun fromRow(row: ResultRow): Secretary = Secretary(
-            id = row[Secretaries.id],
+            id = row[Secretaries.id].value,
             firstName = row[Secretaries.firstName],
             surName = row[Secretaries.surName]
         )

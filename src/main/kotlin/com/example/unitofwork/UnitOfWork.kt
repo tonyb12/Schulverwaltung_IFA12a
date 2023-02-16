@@ -4,6 +4,7 @@ import com.example.database.exposed.ExposedDb
 import com.example.repository.SecretaryRepository
 import com.example.repository.SecretarySecretRepository
 import com.example.repository.StudentRepository
+import com.example.repository.StudentsSecretRepository
 import com.example.repository.interfaces.ISecretaryRepository
 import com.example.repository.interfaces.ISecretRepository
 import com.example.repository.interfaces.IStudentRepository
@@ -49,7 +50,7 @@ class UnitOfWork : IUnitOfWork {
     override val studentSecretRepository: ISecretRepository
         get(): ISecretRepository {
             if (_studentSecretRepository == null) {
-                _studentSecretRepository = SecretarySecretRepository()
+                _studentSecretRepository = StudentsSecretRepository()
             }
             return _studentSecretRepository!!
         }

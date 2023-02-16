@@ -2,39 +2,42 @@ package com.example.repository
 
 import com.example.database.objects.StudentSecrets
 import com.example.dto.interfaces.ISecret
-import com.example.dto.Secret
+import com.example.dto.SecretarySecret
+import com.example.dto.StudentSecret
 import com.example.repository.interfaces.ISecretRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class StudentsSecretRepository : ISecretRepository {
-    override fun getByUserName(userName: String): Secret? {
+    override fun getByUserName(userName: String): ISecret? {
         val secretRow = StudentSecrets.select { StudentSecrets.userName eq userName }.singleOrNull() ?: return null
-        return Secret.fromRow(secretRow)
+        return StudentSecret.fromRow(secretRow)
     }
 
-    override fun getAll(): List<Secret> {
-        return StudentSecrets.selectAll().map { Secret.fromRow(it) }
+    override fun getAll(): List<ISecret> {
+        return StudentSecrets.selectAll().map { StudentSecret.fromRow(it) }
     }
 
-    override fun getById(id: Int): Secret? {
+    override fun getById(id: Int): ISecret? {
         val secret = StudentSecrets.select { StudentSecrets.id eq id }.singleOrNull() ?: return null
-        return Secret.fromRow(secret)
+        return StudentSecret.fromRow(secret)
     }
 
     override fun add(entity: ISecret): ISecret {
         val id = StudentSecrets.insert {
             it[userName] = entity.userName
             it[hash] = entity.hash
+            it[userId] = entity.userId
         } get StudentSecrets.id
-        return Secret.fromRow(StudentSecrets.select { StudentSecrets.id eq id }.single())
+        return StudentSecret.fromRow(StudentSecrets.select { StudentSecrets.id eq id }.single())
     }
 
     override fun add(entities: List<ISecret>): List<ISecret> {
         return StudentSecrets.batchInsert(entities) {
             this[StudentSecrets.userName] = it.hash
             this[StudentSecrets.hash] = it.hash
-        }.toList().map { Secret.fromRow(it) }
+            this[StudentSecrets.userId] = it.userId
+        }.toList().map { StudentSecret.fromRow(it) }
     }
 
     override fun update(entity: ISecret): Int {
