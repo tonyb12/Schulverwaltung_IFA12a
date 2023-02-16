@@ -1,4 +1,4 @@
-package com.example.model
+package com.example.datatransport
 
 import org.jetbrains.exposed.sql.ResultRow
 import com.example.database.objects.Secretaries
