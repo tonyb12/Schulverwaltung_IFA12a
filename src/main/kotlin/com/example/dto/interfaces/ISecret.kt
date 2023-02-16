@@ -1,4 +1,4 @@
-package com.example.datatransport.interfaces
+package com.example.dto.interfaces
 
 interface ISecret {
     val id: Int

@@ -1,4 +1,4 @@
-package com.example.datatransport
+package com.example.dto
 
 import com.example.database.objects.Students
 import org.jetbrains.exposed.sql.ResultRow

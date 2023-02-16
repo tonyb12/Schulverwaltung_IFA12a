@@ -1,60 +1,55 @@
 package com.example.repository
 
 import com.example.database.objects.SecretarySecrets
-import com.example.model.Secret
+import com.example.dto.interfaces.ISecret
+import com.example.dto.Secret
 import com.example.repository.interfaces.ISecretRepository
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.deleteAll
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
-class SecretRepository : ISecretRepository {
-    private val connection: Database
-    constructor(connection: Database) {
-        this.connection = connection
-    }
-
+class SecretarySecretRepository : ISecretRepository {
     override fun getByUserName(userName: String): Secret? {
-        return transaction(connection) {
-            val secretRow = SecretarySecrets.select { SecretarySecrets.userName eq userName }.singleOrNull() ?: return@transaction null
-            Secret.fromRow(secretRow)
-        }
+        val secretRow = SecretarySecrets.select { SecretarySecrets.userName eq userName }.singleOrNull() ?: return null
+        return Secret.fromRow(secretRow)
     }
 
     override fun getAll(): List<Secret> {
-        TODO("Not yet implemented")
+        return SecretarySecrets.selectAll().map { Secret.fromRow(it) }
     }
 
     override fun getById(id: Int): Secret? {
+        val secret = SecretarySecrets.select { SecretarySecrets.id eq id }.singleOrNull() ?: return null
+        return Secret.fromRow(secret)
+    }
+
+    override fun add(entity: ISecret): ISecret {
+        val id = SecretarySecrets.insert {
+            it[userName] = entity.userName
+            it[hash] = entity.hash
+        } get SecretarySecrets.id
+        return Secret.fromRow(SecretarySecrets.select { SecretarySecrets.id eq id }.single())
+    }
+
+    override fun add(entities: List<ISecret>): List<ISecret> {
+        return SecretarySecrets.batchInsert(entities) {
+            this[SecretarySecrets.userName] = it.hash
+            this[SecretarySecrets.hash] = it.hash
+        }.toList().map { Secret.fromRow(it) }
+    }
+
+    override fun update(entity: ISecret): Int {
         TODO("Not yet implemented")
     }
 
-    override fun add(entity: Secret): Secret {
-        return transaction(connection) {
-            val id = SecretarySecrets.insert {
-                it[SecretarySecrets.userName] = entity.userName
-                it[SecretarySecrets.hash] = entity.hash
-            } get SecretarySecrets.id
-            Secret.fromRow(SecretarySecrets.select { SecretarySecrets.id eq id }.single())
-        }
-    }
-
-    override fun update(entity: Secret): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun delete(entity: Secret): Int {
-        TODO("Not yet implemented")
+    override fun delete(entity: ISecret): Int {
+        return SecretarySecrets.deleteWhere { id eq entity.id }
     }
 
     override fun deleteById(id: Int): Int {
-        TODO("Not yet implemented")
+        return SecretarySecrets.deleteWhere { SecretarySecrets.id eq id }
     }
 
     override fun deleteAll(): Int {
-        return transaction(connection) {
-            SecretarySecrets.deleteAll()
-        }
+        return SecretarySecrets.deleteAll()
     }
 }

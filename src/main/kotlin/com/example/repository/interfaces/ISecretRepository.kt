@@ -1,7 +1,7 @@
 package com.example.repository.interfaces
 
-import com.example.model.SecretarySecret
+import com.example.dto.interfaces.ISecret
 
-interface ISecretRepository<T> : IRepository<T, Int> {
-    fun getByUserName(userName: String): T?
+interface ISecretRepository : IRepository<ISecret, Int> {
+    fun getByUserName(userName: String): ISecret?
 }

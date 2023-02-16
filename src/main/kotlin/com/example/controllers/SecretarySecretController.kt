@@ -1,44 +1,61 @@
 package com.example.controllers
 
 import com.example.controllers.interfaces.ISecretController
-import com.example.model.SecretarySecret
+import com.example.database.exposed.ExposedDb
+import com.example.dto.interfaces.ISecret
 import com.example.unitofwork.UnitOfWork
+import kotlinx.coroutines.Dispatchers
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
-class SecretController : ISecretController {
-    private val _unitOfWork: UnitOfWork = UnitOfWork()
-    override fun getByUserName(userName: String): SecretarySecret? {
-        _unitOfWork.secretarySecretRepository
+class SecretarySecretController : ISecretController {
+    private val _unitOfWork = UnitOfWork()
+    override suspend fun getByUserName(userName: String): ISecret? {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.getByUserName(userName)
+        }
     }
 
-    override fun getAll(): List<SecretarySecret> {
-        TODO("Not yet implemented")
+    override suspend fun getAll(): List<ISecret> {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.getAll()
+        }    }
+
+    override suspend fun getById(id: Int): ISecret? {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.getById(id)
+        }
     }
 
-    override fun getById(id: Int): SecretarySecret? {
-        TODO("Not yet implemented")
+    override suspend fun add(entity: ISecret): ISecret {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.add(entity)
+        }
     }
 
-    override fun add(entity: SecretarySecret): SecretarySecret {
-        return _unitOfWork.secretarySecretRepository.add(entity)
+    override suspend fun add(entities: List<ISecret>): List<ISecret> {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            return@newSuspendedTransaction _unitOfWork.secretarySecretRepository.add(entities)
+        }
     }
 
-    override fun add(entity: List<SecretarySecret>): List<SecretarySecret> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(entity: ISecret): Int {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.update(entity)
+        }    }
 
-    override fun update(entity: SecretarySecret): Int {
-        TODO("Not yet implemented")
-    }
+    override suspend fun delete(entity: ISecret): Int {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.delete(entity)
+        }    }
 
-    override fun delete(entity: SecretarySecret): Int {
-        TODO("Not yet implemented")
-    }
+    override suspend fun deleteById(id: Int): Int {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.deleteById(id)
+        }    }
 
-    override fun deleteById(id: Int): Int {
-        TODO("Not yet implemented")
-    }
+    override suspend fun deleteAll(): Int {
+        return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+            _unitOfWork.secretarySecretRepository.deleteAll()
+        }    }
 
-    override fun deleteAll(): Int {
-        return _unitOfWork.secretarySecretRepository.deleteAll()
-    }
 }

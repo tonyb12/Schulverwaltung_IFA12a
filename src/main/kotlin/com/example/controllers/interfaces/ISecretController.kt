@@ -1,6 +1,7 @@
 package com.example.controllers.interfaces
 
-import com.example.model.SecretarySecret
+import com.example.dto.interfaces.ISecret
 
-interface ISecretarySecretController : IController<SecretarySecret, Int> {
+interface ISecretController : IController<ISecret, Int> {
+    suspend fun getByUserName(userName: String): ISecret?
 }

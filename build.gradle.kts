@@ -37,4 +37,6 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("mysql:mysql-connector-java:8.0.32")
     implementation("com.github.doyaaaaaken:kotlin-csv-jvm:$kotlinCsv_version")
+    implementation("org.mindrot:jbcrypt:0.4")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
 }

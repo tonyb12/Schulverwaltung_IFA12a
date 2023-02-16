@@ -1,7 +1,7 @@
-package com.example.datatransport
+package com.example.dto
 
 import com.example.database.objects.SecretarySecrets
-import com.example.datatransport.interfaces.ISecret
+import com.example.dto.interfaces.ISecret
 import org.jetbrains.exposed.sql.ResultRow
 
 data class Secret(override val id: Int, override val userName: String, override val hash: String) : ISecret {
