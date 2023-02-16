@@ -48,7 +48,13 @@
     <div class="row gap-20-0">
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Klasse:</u></span>
-            <span class="pt-3">$student.className</span>
+            <span class="pt-3">
+                #if($student.className != "")
+                    $student.className
+                #else
+                Klasse wurde noch nicht zugewiesen.
+                #end
+            </span>
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Beruf:</u></span>

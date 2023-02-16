@@ -1,6 +1,6 @@
 package com.example.data
 
-import com.example.model.Student
+import com.example.dto.Student
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.io.InputStream
 
