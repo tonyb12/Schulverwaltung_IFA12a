@@ -6,14 +6,15 @@ import com.example.unitofwork.UnitOfWork
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.experimental.suspendedTransactionAsync
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class StudentsSecretController : ISecretController {
     private val _unitOfWork = UnitOfWork()
 
     override suspend fun getByUserName(userName: String): ISecret? {
-        return suspendedTransactionAsync(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
+        return newSuspendedTransaction(Dispatchers.IO, _unitOfWork.databaseConnection) {
             _unitOfWork.studentSecretRepository.getByUserName(userName)
-        }.await()
+        }
     }
 
     override suspend fun getAll(): List<ISecret> {
