@@ -28,8 +28,6 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-    implementation("org.hibernate:hibernate-gradle-plugin:5.6.14.Final")
     implementation("io.ktor:ktor-server-velocity:$ktor_version")
     implementation("org.apache.velocity:velocity:1.7")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
@@ -39,4 +37,6 @@ dependencies {
     implementation("com.github.doyaaaaaken:kotlin-csv-jvm:$kotlinCsv_version")
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
+    testImplementation(kotlin("test"))
+    testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
 }

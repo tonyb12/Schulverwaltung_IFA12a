@@ -1,12 +1,12 @@
 package com.example.plugins
 
+import com.example.controllers.SecretaryController
 import com.example.controllers.SecretarySecretController
 import com.example.controllers.StudentController
 import com.example.controllers.StudentsSecretController
-import com.example.dto.Secret
+import com.example.dto.Secretary
 import com.example.dto.Student
-import com.example.validator.CredentialValidator
-import io.ktor.http.*
+import com.example.utils.PasswordHasher
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.application.*
@@ -16,12 +16,23 @@ import io.ktor.server.http.content.*
 import io.ktor.server.sessions.*
 import io.ktor.server.velocity.*
 import java.io.File
+enum class UserType {
+    Secretary,
+    Student,
+    None
+}
+data class UserSession(val token: String) : Principal
+data class UserInfo(val userName: String, val type: UserType, val userId: Int)
 
-data class UserSession(val name: String) : Principal
+class UserPrincipal(val userName: String, val type: UserType, val userId: Int) : Principal
 
 fun Application.configureRouting() {
-    val secretaryCredentialValidator = CredentialValidator(SecretarySecretController())
-    val studentsCredentalValidator = CredentialValidator(StudentsSecretController())
+    val secretarySecretController = SecretarySecretController()
+    val studentsSecretController = StudentsSecretController()
+    val studentController = StudentController()
+    val secretaryController = SecretaryController()
+
+    val tokenList = mutableMapOf<String, UserInfo>()
 
     install(Sessions) {
         cookie<UserSession>("user_session") {
@@ -35,45 +46,82 @@ fun Application.configureRouting() {
             userParamName = "username"
             passwordParamName = "password"
             validate { credentials ->
-                if (secretaryCredentialValidator.verifyCredentials(credentials.name, credentials.password)) {
-                    UserIdPrincipal(credentials.name)
+                var type: UserType = UserType.None
+
+                var secret = secretarySecretController.getByUserName(credentials.name)
+                if (secret != null) {
+                    type = UserType.Secretary
+                } else {
+                    secret = studentsSecretController.getByUserName(credentials.name)
+                    print(secret)
+                    if (secret != null) type = UserType.Student
+                }
+
+                if (type == UserType.None) return@validate null
+
+                if (PasswordHasher.verifyPassword(credentials.password, secret!!.hash)) {
+                    UserPrincipal(credentials.name, type, secret.userId)
                 } else null
             }
             challenge {
-                print(it)
-                call.respond("Wrong creds")
+                call.respondRedirect("/login")
+                //TODO("Redirect to login false page")
             }
         }
         session<UserSession>("auth-session") {
             validate { session ->
-                print(session)
-                session
+                if (tokenList.containsKey(session.token)) session else null
             }
             challenge {
+                call.sessions.clear<UserSession>()
                 call.respondRedirect("/login")
             }
         }
     }
     routing {
         get("/addUsers") {
-            val controller = SecretarySecretController()
-            //controller.add(Secret(0, "Nico", secretaryCredentialValidator.hashPassword("Password")))
-            controller.add(Secret(0, "Toan", secretaryCredentialValidator.hashPassword("Bui")))
+            //studentController.add(Student(0, "Christian", "Zahn", "IFA12a", "12.12.2003", "christian.zahn@yahooo.com"))
+            //studentController.add(Student(0, "Toan", "Bui", "IFA13a", "12.12.2003", "toan.bui@yahooo.com"))
+            secretaryController.add(Secretary(0, "Secretary", "VanHil"))
         }
         authenticate("auth-form", strategy = AuthenticationStrategy.Required) {
-            /*
-            get("/student") {
-                //call.respond(VelocityContent("templates/students.vm", mapOf("student" to student)))
-            }*/
             post("/login") {
-                val userName = call.principal<UserIdPrincipal>()?.name.toString()
-                call.sessions.set(UserSession(name = userName))
-                call.respondText("Hello, ${call.principal<UserIdPrincipal>()?.name}!")
+                val userName = call.principal<UserPrincipal>()?.userName.toString()
+                val type = call.principal<UserPrincipal>()?.type
+                val userId = call.principal<UserPrincipal>()?.userId
+
+                val token = PasswordHasher.hashPassword(userName)
+
+                tokenList[token] = UserInfo(userName, type ?: UserType.None, userId!!)
+
+                call.sessions.set(UserSession(token = token))
+
+                when (type) {
+                    UserType.Student -> call.respondRedirect("/student")
+                    UserType.Secretary -> call.respondRedirect("/secretary")
+                    else -> {call.respondRedirect("/logout")}
+                }
+                call.respondText("Hello, ${call.principal<UserPrincipal>()?.userName}!")
             }
         }
         authenticate("auth-session") {
             get("/secretary") {
-                call.respond(VelocityContent("templates/secretary.vm", mapOf()))
+                val token = call.sessions.get<UserSession>()?.token
+                if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Secretary)) {
+                    val secretary = secretaryController.getById(tokenList[token]?.userId!!)!!
+                    call.respond(VelocityContent("templates/secretary.vm", mapOf("secretary" to secretary)))
+                }else {
+                    call.respondRedirect("/logout")
+                }
+            }
+            get("/student") {
+                val token = call.sessions.get<UserSession>()?.token
+                if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Student)) {
+                    val student = studentController.getById(tokenList[token]?.userId!!)!!
+                    call.respond(VelocityContent("templates/students.vm", mapOf("student" to student)))
+                }else {
+                    call.respondRedirect("/logout")
+                }
             }
         }
         get("/login"){
@@ -82,12 +130,6 @@ fun Application.configureRouting() {
         get("/logout") {
             call.sessions.clear<UserSession>()
             call.respondRedirect("/login")
-        }
-        route("Test") {
-            val studentsController = StudentController()
-            get {
-                studentsController.add(Student(0, "Short", "Lived", "Man", "No", "email"))
-            }
         }
         static("assets") {
             staticRootFolder = File("src/main/resources/assets")

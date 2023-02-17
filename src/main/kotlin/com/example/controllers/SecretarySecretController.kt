@@ -6,6 +6,8 @@ import com.example.dto.interfaces.ISecret
 import com.example.unitofwork.UnitOfWork
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.transactions.experimental.suspendedTransactionAsync
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class SecretarySecretController : ISecretController {
     private val _unitOfWork = UnitOfWork()
