@@ -23,9 +23,7 @@ import java.io.File
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
-        launch {
-            configureRouting()
-        }
+        configureRouting()
         module()
     }.start(wait = true)
 }

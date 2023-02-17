@@ -4,6 +4,7 @@ import com.example.controllers.SecretaryController
 import com.example.controllers.SecretarySecretController
 import com.example.controllers.StudentController
 import com.example.controllers.StudentsSecretController
+import com.example.dto.Secretary
 import com.example.dto.Student
 import com.example.utils.PasswordHasher
 import io.ktor.server.routing.*
@@ -79,8 +80,9 @@ fun Application.configureRouting() {
     }
     routing {
         get("/addUsers") {
-            studentController.add(Student(0, "Christian", "Zahn", "IFA12a", "12.12.2003", "christian.zahn@yahooo.com"))
-            studentController.add(Student(0, "Toan", "Bui", "IFA13a", "12.12.2003", "toan.bui@yahooo.com"))
+            //studentController.add(Student(0, "Christian", "Zahn", "IFA12a", "12.12.2003", "christian.zahn@yahooo.com"))
+            //studentController.add(Student(0, "Toan", "Bui", "IFA13a", "12.12.2003", "toan.bui@yahooo.com"))
+            secretaryController.add(Secretary(0, "Secretary", "VanHil"))
         }
         authenticate("auth-form", strategy = AuthenticationStrategy.Required) {
             post("/login") {
@@ -128,12 +130,6 @@ fun Application.configureRouting() {
         get("/logout") {
             call.sessions.clear<UserSession>()
             call.respondRedirect("/login")
-        }
-        route("Test") {
-            val studentsController = StudentController()
-            get {
-                studentsController.add(Student(0, "Short", "Lived", "Man", "No", "email"))
-            }
         }
         static("assets") {
             staticRootFolder = File("src/main/resources/assets")
