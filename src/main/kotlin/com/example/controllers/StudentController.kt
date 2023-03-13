@@ -5,6 +5,7 @@ import com.example.dto.Student
 import com.example.dto.StudentSecret
 import com.example.dto.interfaces.ISecret
 import com.example.unitofwork.UnitOfWork
+import com.example.utils.BirthdayParser
 import com.example.utils.PasswordHasher
 import com.example.utils.UserNameGenerator
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +30,7 @@ class StudentController : IStudentController {
         val result = suspendedTransactionAsync(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
             val student = _unitOfWork.studentRepository.add(entity)
             val userName = UserNameGenerator.getUsername(entity.firstName, entity.surName, entity.birthday)
-            _unitOfWork.studentSecretRepository.add(StudentSecret(0, userName, PasswordHasher.hashPassword(userName), student.id))
+            _unitOfWork.studentSecretRepository.add(StudentSecret(0, userName, PasswordHasher.hashPassword(BirthdayParser.parse(entity.birthday)), student.id))
             _unitOfWork.commit()
             return@suspendedTransactionAsync student
         }
@@ -42,7 +43,7 @@ class StudentController : IStudentController {
             val secretList = mutableListOf<ISecret>()
             students.parallelStream().forEach {
                 val userName = UserNameGenerator.getUsername(it.firstName,it.surName,it.birthday)
-                secretList.add(StudentSecret(0, userName, PasswordHasher.hashPassword(userName), it.id))
+                secretList.add(StudentSecret(0, userName, PasswordHasher.hashPassword(BirthdayParser.parse(it.birthday)), it.id))
             }
             _unitOfWork.studentSecretRepository.add(secretList)
             _unitOfWork.commit()
