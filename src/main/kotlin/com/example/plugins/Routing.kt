@@ -6,6 +6,7 @@ import com.example.controllers.StudentController
 import com.example.controllers.StudentsSecretController
 import com.example.dto.Secretary
 import com.example.dto.Student
+import com.example.utils.CsvReader
 import com.example.utils.PasswordHasher
 import io.ktor.http.*
 import io.ktor.http.content.*
@@ -19,6 +20,8 @@ import io.ktor.server.request.*
 import io.ktor.server.sessions.*
 import io.ktor.server.velocity.*
 import java.io.File
+import java.io.FileInputStream
+
 enum class UserType {
     Secretary,
     Student,
@@ -121,12 +124,19 @@ fun Application.configureRouting() {
                 post("/upload") {
                     val token = call.sessions.get<UserSession>()?.token
                     if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Secretary)) {
+
                         val multipartData = call.receiveMultipart()
                         multipartData.forEachPart { partData ->
                             when (partData) {
                                 is PartData.FileItem -> {
-                                    val fileBytes = partData.streamProvider().readBytes()
-                                    File("C:\\temp\\temp.csv").writeBytes(fileBytes)
+
+                                    val fileBytes = partData.streamProvider()
+                                    val parseData = CsvReader.readCsv(fileBytes)
+                                    studentController.deleteAll()
+                                    studentsSecretController.deleteAll()
+                                    studentController.add(parseData)
+                                    println("Test:" + parseData)
+
                                 }
                                 else -> {}
                             }

@@ -33,7 +33,7 @@ class StudentsSecretRepository : ISecretRepository {
 
     override fun add(entities: List<ISecret>): List<ISecret> {
         return StudentSecrets.batchInsert(entities) {
-            this[StudentSecrets.userName] = it.hash
+            this[StudentSecrets.userName] = it.userName
             this[StudentSecrets.hash] = it.hash
             this[StudentSecrets.userId] = it.userId
         }.toList().map { StudentSecret.fromRow(it) }
