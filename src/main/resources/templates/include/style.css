@@ -37,14 +37,22 @@
 body {
     font-family: 'Gill Sans MT', sans-serif;
     color: var(--color-darkgrey);
+    padding-bottom: var(--footer-height);
+    position: relative;
 }
 
 .color-primary {
     color: var(--color-blue);
 }
 
+.gap-10-0 {
+    gap: 10px 0;
+}
 .gap-20-0 {
     gap: 20px 0;
+}
+.gap-0-20 {
+    gap: 0 20px;
 }
 
 /* Buttons */
@@ -65,7 +73,6 @@ body {
 }
 
 /* Footer Part */
-.footer-dummy,
 .footer {
     height: var(--footer-height);
 }
@@ -75,7 +82,7 @@ body {
 .footer {
     background-color: var(--color-darkgrey);
     color: var(--color-grey);
-    position: fixed;
+    position: absolute;
     bottom: 0;
 }
 
