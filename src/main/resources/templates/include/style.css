@@ -37,14 +37,22 @@
 body {
     font-family: 'Gill Sans MT', sans-serif;
     color: var(--color-darkgrey);
+    padding-bottom: var(--footer-height);
+    position: relative;
 }
 
 .color-primary {
     color: var(--color-blue);
 }
 
+.gap-10-0 {
+    gap: 10px 0;
+}
 .gap-20-0 {
     gap: 20px 0;
+}
+.gap-0-20 {
+    gap: 0 20px;
 }
 
 /* Buttons */
@@ -56,6 +64,7 @@ body {
 /* Navigation Part */
 
 .navbar {
+    background-color: white;
     color: var(--color-blue);
     border-bottom: 2px solid var(--color-blue);
 }
@@ -65,7 +74,6 @@ body {
 }
 
 /* Footer Part */
-.footer-dummy,
 .footer {
     height: var(--footer-height);
 }
@@ -75,7 +83,7 @@ body {
 .footer {
     background-color: var(--color-darkgrey);
     color: var(--color-grey);
-    position: fixed;
+    position: absolute;
     bottom: 0;
 }
 
@@ -118,6 +126,11 @@ body {
     width: 100%;
 }
 
+.form-error {
+    color: #e2281b;
+    text-decoration: underline;
+}
+
 @media (min-width: 768px) {
     .login-form {
         width: 576px;
@@ -125,4 +138,23 @@ body {
     .login-form-wrapper {
         width: 768px;
     }
+}
+
+
+.body-error {
+    background-image: url("../../assets/error.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.content-error {
+    text-shadow: 5px 5px 15px white;
+}
+
+.photo-reference {
+    position: absolute;
+    bottom: var(--footer-height);
+    right: 20px;
+    color: white;
 }

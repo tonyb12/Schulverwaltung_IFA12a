@@ -7,6 +7,7 @@
             <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule 1 Bayreuth">
         </a>
         <hr>
+        <p class="form-error">Die von Ihnen eingegebenen Daten waren nicht korrekt!</p>
         <form class="login-form d-flex flex-column align-items-center" method="POST">
             <div class="mb-3  w-100">
                 <label for="username" class="form-label">Benutzername</label>

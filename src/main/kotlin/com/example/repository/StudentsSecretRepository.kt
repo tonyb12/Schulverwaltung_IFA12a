@@ -2,7 +2,6 @@ package com.example.repository
 
 import com.example.database.objects.StudentSecrets
 import com.example.dto.interfaces.ISecret
-import com.example.dto.SecretarySecret
 import com.example.dto.StudentSecret
 import com.example.repository.interfaces.ISecretRepository
 import org.jetbrains.exposed.sql.*
@@ -34,7 +33,7 @@ class StudentsSecretRepository : ISecretRepository {
 
     override fun add(entities: List<ISecret>): List<ISecret> {
         return StudentSecrets.batchInsert(entities) {
-            this[StudentSecrets.userName] = it.hash
+            this[StudentSecrets.userName] = it.userName
             this[StudentSecrets.hash] = it.hash
             this[StudentSecrets.userId] = it.userId
         }.toList().map { StudentSecret.fromRow(it) }
@@ -54,5 +53,9 @@ class StudentsSecretRepository : ISecretRepository {
 
     override fun deleteAll(): Int {
         return StudentSecrets.deleteAll()
+    }
+
+    override fun resetAutoIncrement(transaction: Transaction) {
+        transaction.exec("ALTER TABLE StudentSecrets AUTO_INCREMENT = 1")
     }
 }

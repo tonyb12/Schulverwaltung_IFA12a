@@ -1,18 +1,19 @@
 #parse("include/header.vm")
 <body>
 <nav class="navbar container-fluid">
-    <div class="container">
-        <div class="row w-100 gap-20-0">
+    <div class="container justify-content-center justify-content-lg-between">
+        <div class="row w-100 gap-10-0">
             <div class="logo col-12 col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-start">
-                <a href="https://www.bs1-bt.de/">
-                    <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule Bayreuth">
+                <a href="https://www.bs1-bt.de/" title="Zur Homepage der Berufsschule 1 Bayreuth">
+                    <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule 1 Bayreuth">
                 </a>
             </div>
             <div class="student col-12 col-lg-4 d-flex align-items-center justify-content-center">
-                Hallo $student.firstName $student.surName!
+                Hallo $student.firstName!
             </div>
-            <div class="contact col-12 col-lg-4 d-none d-lg-flex align-items-center justify-content-end">
-                <a href="https://www.bs1-bt.de/allgemeines/kontakt" target="_blank" class="btn btn-outline-primary">Kontakt</a>
+            <div class="contact col-12 col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-end gap-0-20">
+                <a href="https://www.bs1-bt.de/allgemeines/kontakt"  title="Zur Kontaktseite" target="_blank" class="btn btn-outline-primary">Kontakt</a>
+                <a href="/logout" title="Ausloggen" class="btn btn-outline-primary">Logout</a>
             </div>
         </div>
     </div>
@@ -52,13 +53,19 @@
                 #if($student.className != "")
                     $student.className
                 #else
-                Klasse wurde noch nicht zugewiesen.
+                    Klasse wurde noch nicht zugewiesen.
                 #end
             </span>
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Beruf:</u></span>
-            <span class="pt-3"></span>
+            <span class="pt-3">$student.job</span>
+        </div>
+        <div class="col-12 col-md-3 d-flex flex-column">
+            <span class="color-primary"><u>Blockpläne:</u></span>
+            <span class="pt-3">
+                <a href="https://www.bs1-bt.de/service-download/blockplaene" title="Zu den Blockplänen" target="_blank" class="btn btn-outline-primary">Zu den Blockplänen</a>
+            </span>
         </div>
     </div>
 </div>

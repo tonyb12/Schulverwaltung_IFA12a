@@ -1,9 +1,9 @@
 package com.example.controllers
 
 import com.example.controllers.interfaces.IStudentController
-import com.example.dto.SecretarySecret
 import com.example.dto.Student
 import com.example.dto.StudentSecret
+import com.example.dto.interfaces.ISecret
 import com.example.unitofwork.UnitOfWork
 import com.example.utils.PasswordHasher
 import com.example.utils.UserNameGenerator
@@ -39,6 +39,12 @@ class StudentController : IStudentController {
     override suspend fun add(entities: List<Student>): List<Student> {
         val result = suspendedTransactionAsync(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
             val students = _unitOfWork.studentRepository.add(entities)
+            val secretList = mutableListOf<ISecret>()
+            students.parallelStream().forEach {
+                val userName = UserNameGenerator.getUsername(it.firstName,it.surName,it.birthday)
+                secretList.add(StudentSecret(0, userName, PasswordHasher.hashPassword(userName), it.id))
+            }
+            _unitOfWork.studentSecretRepository.add(secretList)
             _unitOfWork.commit()
             return@suspendedTransactionAsync students
         }
@@ -65,7 +71,9 @@ class StudentController : IStudentController {
 
     override suspend fun deleteAll(): Int {
         return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
-             _unitOfWork.studentRepository.deleteAll()
+             val result = _unitOfWork.studentRepository.deleteAll()
+            _unitOfWork.studentRepository.resetAutoIncrement(this)
+            return@newSuspendedTransaction result
         }
     }
 }

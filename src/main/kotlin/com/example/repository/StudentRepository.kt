@@ -58,5 +58,9 @@ class StudentRepository : IStudentRepository {
     override fun deleteAll(): Int {
         return Students.deleteAll()
     }
+
+    override fun resetAutoIncrement(transaction: Transaction) {
+        transaction.exec("ALTER TABLE Students AUTO_INCREMENT = 1")
+    }
 }
 

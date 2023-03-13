@@ -1,0 +1,31 @@
+#parse("include/header.vm")
+<body class="body-error">
+
+<nav class="navbar container-fluid">
+    <div class="container justify-content-center justify-content-lg-between">
+        <div class="row w-100 gap-10-0">
+            <div class="logo col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
+                <a href="https://www.bs1-bt.de/" title="Homepage der Berufsschule 1 Bayreuth">
+                    <img class="img-logo" src="/assets/logo.png" alt="Logo der Berufsschule 1 Bayreuth">
+                </a>
+            </div>
+            <div class="contact col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-end gap-0-20">
+                <a href="https://www.bs1-bt.de/allgemeines/kontakt" title="Zur Kontaktseite" target="_blank" class="btn btn-outline-primary">Kontakt</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="container content-error pt-5">
+        <h1 class="mt-5">Es tut uns leid...</h1>
+        <h2 class="mt-5">Die von Ihnen aufgerufene Seite wurde nicht gefunden.</h2>
+    </div>
+    <div class="container mt-5 pb-5">
+        <a href="/login" title="Zurück zum Login" class="btn btn-outline-primary">Zurück zum Login</a>
+    </div>
+</div>
+<div class="photo-reference">
+    <p>Foto von <a href="https://unsplash.com/@hhh13?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">傅甬 华</a> auf <a href="https://unsplash.com/de/s/fotos/error?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+    </p>
+</div>
+#parse("include/footer.vm")
