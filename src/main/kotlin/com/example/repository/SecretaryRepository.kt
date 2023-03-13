@@ -50,4 +50,8 @@ class SecretaryRepository : ISecretaryRepository {
     override fun deleteAll(): Int {
         return Secretaries.deleteAll()
     }
+
+    override fun resetAutoIncrement(transaction: Transaction) {
+        transaction.exec("ALTER TABLE Secretaries AUTO_INCREMENT = 1")
+    }
 }

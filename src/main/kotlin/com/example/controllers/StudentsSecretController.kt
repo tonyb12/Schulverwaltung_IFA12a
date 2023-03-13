@@ -5,8 +5,7 @@ import com.example.dto.interfaces.ISecret
 import com.example.unitofwork.UnitOfWork
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.experimental.suspendedTransactionAsync
-import org.jetbrains.exposed.sql.transactions.transaction
+
 
 class StudentsSecretController : ISecretController {
     private val _unitOfWork = UnitOfWork()
@@ -61,7 +60,9 @@ class StudentsSecretController : ISecretController {
 
     override suspend fun deleteAll(): Int {
         return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
-            _unitOfWork.studentSecretRepository.deleteAll()
+            val result = _unitOfWork.studentSecretRepository.deleteAll()
+            _unitOfWork.studentSecretRepository.resetAutoIncrement(this)
+            return@newSuspendedTransaction result
         }
     }
 }
