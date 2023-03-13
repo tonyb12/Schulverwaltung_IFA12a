@@ -1,7 +1,6 @@
 package com.example.controllers
 
 import com.example.controllers.interfaces.ISecretaryController
-import com.example.database.exposed.ExposedDb
 import com.example.dto.Secretary
 import com.example.dto.SecretarySecret
 import com.example.unitofwork.UnitOfWork
@@ -57,7 +56,9 @@ class SecretaryController : ISecretaryController{
 
     override suspend fun deleteAll(): Int {
         return newSuspendedTransaction(Dispatchers.IO, db = _unitOfWork.databaseConnection) {
-             _unitOfWork.secretaryRepository.deleteAll()
+             val result = _unitOfWork.secretaryRepository.deleteAll()
+            _unitOfWork.secretaryRepository.resetAutoIncrement(this)
+            return@newSuspendedTransaction result
         }
     }
 }
