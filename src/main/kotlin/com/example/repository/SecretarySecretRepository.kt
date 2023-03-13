@@ -54,4 +54,8 @@ class SecretarySecretRepository : ISecretRepository {
     override fun deleteAll(): Int {
         return SecretarySecrets.deleteAll()
     }
+
+    override fun resetAutoIncrement(transaction: Transaction) {
+        transaction.exec("ALTER TABLE SecretarySecrets AUTO_INCREMENT = 1")
+    }
 }
