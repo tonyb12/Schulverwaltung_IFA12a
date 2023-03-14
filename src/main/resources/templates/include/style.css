@@ -39,6 +39,7 @@ body {
     color: var(--color-darkgrey);
     padding-bottom: var(--footer-height);
     position: relative;
+    min-height: 100vh;
 }
 
 .color-primary {
