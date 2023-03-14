@@ -1,5 +1,9 @@
 package com.schulverwaltung.plugins
 
+import com.schulverwaltung.authentication.UserInfo
+import com.schulverwaltung.authentication.UserPrincipal
+import com.schulverwaltung.authentication.UserSession
+import com.schulverwaltung.authentication.UserType
 import com.schulverwaltung.controllers.SecretaryController
 import com.schulverwaltung.controllers.SecretarySecretController
 import com.schulverwaltung.controllers.StudentController
@@ -7,6 +11,7 @@ import com.schulverwaltung.controllers.StudentsSecretController
 import com.schulverwaltung.dto.Secretary
 import com.schulverwaltung.utils.CsvReader
 import com.schulverwaltung.utils.PasswordHasher
+import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
@@ -14,20 +19,13 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.Authentication
 import io.ktor.server.http.content.*
+import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.sessions.*
 import io.ktor.server.velocity.*
 import java.io.File
 
-enum class UserType {
-    Secretary,
-    Student,
-    None
-}
-data class UserSession(val token: String) : Principal
-data class UserInfo(val userName: String, val type: UserType, val userId: Int)
 
-class UserPrincipal(val userName: String, val type: UserType, val userId: Int) : Principal
 
 fun Application.configureRouting() {
     val secretarySecretController = SecretarySecretController()
@@ -35,7 +33,16 @@ fun Application.configureRouting() {
     val studentController = StudentController()
     val secretaryController = SecretaryController()
 
+
     val tokenList = mutableMapOf<String, UserInfo>()
+
+    install(StatusPages) {
+
+        status(HttpStatusCode.NotFound) { call, status ->
+            call.respondRedirect("/error")
+        }
+
+    }
 
     install(Sessions) {
         cookie<UserSession>("user_session") {
@@ -67,8 +74,8 @@ fun Application.configureRouting() {
                 } else null
             }
             challenge {
-                call.respondRedirect("/login")
-                //TODO("Redirect to login false page")
+
+                call.respond(VelocityContent("templates/login-error.vm", mapOf()))
             }
         }
         session<UserSession>("auth-session") {
@@ -82,11 +89,7 @@ fun Application.configureRouting() {
         }
     }
     routing {
-        get("/addUsers") {
-            //studentController.add(Student(0, "Christian", "Zahn", "IFA12a", "12.12.2003", "christian.zahn@yahooo.com"))
-            //studentController.add(Student(0, "Toan", "Bui", "IFA13a", "12.12.2003", "toan.bui@yahooo.com"))
-            secretaryController.add(Secretary(0, "Secretary", "VanHil"))
-        }
+
         authenticate("auth-form", strategy = AuthenticationStrategy.Required) {
             post("/login") {
                 val userName = call.principal<UserPrincipal>()?.userName.toString()
@@ -102,9 +105,10 @@ fun Application.configureRouting() {
                 when (type) {
                     UserType.Student -> call.respondRedirect("/student")
                     UserType.Secretary -> call.respondRedirect("/secretary")
-                    else -> {call.respondRedirect("/logout")}
+                    else -> {
+                        call.respondRedirect("/logout")
+                    }
                 }
-                call.respondText("Hello, ${call.principal<UserPrincipal>()?.userName}!")
             }
         }
         authenticate("auth-session") {
@@ -114,7 +118,7 @@ fun Application.configureRouting() {
                     if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Secretary)) {
                         val secretary = secretaryController.getById(tokenList[token]?.userId!!)!!
                         call.respond(VelocityContent("templates/secretary.vm", mapOf("secretary" to secretary)))
-                    }else {
+                    } else {
                         call.respondRedirect("/logout")
                     }
                 }
@@ -134,11 +138,15 @@ fun Application.configureRouting() {
                                     studentController.add(parseData)
                                     println("Test:" + parseData)
 
+//                                      call.respondRedirect("/secretary")
+                                        call.respond(VelocityContent("templates/secretary.vm", mapOf()))
+
                                 }
+
                                 else -> {}
                             }
                         }
-                    }else {
+                    } else {
                         call.respondRedirect("/logout")
                     }
                 }
@@ -148,12 +156,27 @@ fun Application.configureRouting() {
                 if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Student)) {
                     val student = studentController.getById(tokenList[token]?.userId!!)!!
                     call.respond(VelocityContent("templates/students.vm", mapOf("student" to student)))
-                }else {
-                    call.respondRedirect("/logout")
+                } else {
+                    call.respondRedirect("/login")
                 }
+
+
+//                authenticator.authenticateStudent(studentController, call.sessions.get<UserSession>()?.token, tokenList, call)
             }
+
         }
-        get("/login"){
+
+        get("/") {
+
+            call.respondRedirect("/login")
+        }
+
+        get("/error") {
+
+            call.respond(VelocityContent("templates/error.vm", mapOf()))
+        }
+
+        get("/login") {
             call.respond(VelocityContent("templates/login.vm", mapOf()))
         }
         get("/logout") {
