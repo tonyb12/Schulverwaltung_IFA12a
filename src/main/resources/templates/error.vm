@@ -1,4 +1,5 @@
 #parse("include/header.vm")
+</head>
 <body class="body-error">
 
 <nav class="navbar container-fluid">

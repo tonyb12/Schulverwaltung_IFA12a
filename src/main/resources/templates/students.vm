@@ -1,4 +1,15 @@
 #parse("include/header.vm")
+<script type="text/javascript">
+    window.addEventListener("load", (event) => {
+        let alertText = document.getElementById('alerttext');
+        let classname = document.getElementById('classname').innerText;
+
+        if(classname == "" || classname.substring(classname.length - 1) == 'n' || classname.substring(classname.length - 1) == 'N') {
+            alertText.classList.add("show");
+        }
+    });
+</script>
+</head>
 <body>
 <nav class="navbar container-fluid">
     <div class="container justify-content-center justify-content-lg-between">
@@ -49,12 +60,11 @@
     <div class="row gap-20-0">
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Klasse:</u></span>
-            <span class="pt-3">
-                #if($student.className != "")
-                    $student.className
-                #else
-                    Klasse wurde noch nicht zugewiesen.
-                #end
+            <span class="pt-3" id="classname">
+                $student.className
+            </span>
+            <span class="alerttext" id="alerttext">
+                Die endgültige Klasse wurde noch nicht zugewiesen.
             </span>
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
