@@ -5,7 +5,7 @@
     --color-grey: #787878;
     --bs-link-color-rgb: var(--color-blue);
     --bs-link-hover-color-rgb: var(--color-darkgrey);
-    --footer-height: 70px
+    --footer-height: 70px;
 }
 
 .btn-outline-primary {
@@ -104,6 +104,17 @@ body {
     margin-bottom: 100px;
 }
 
+.alerttext {
+    color: var(--bs-danger);
+    display: none;
+}
+
+.alerttext.show {
+    display: block;
+}
+
+
+
 /* Login */
 .body-login {
     background-image: url("../../assets/login-bg.png");
@@ -128,7 +139,7 @@ body {
 }
 
 .form-error {
-    color: #e2281b;
+    color: var(--bs-danger);
     text-decoration: underline;
 }
 

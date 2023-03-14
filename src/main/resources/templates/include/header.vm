@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de-de">
 <head>
     <meta charset="utf-8">
@@ -8,4 +9,3 @@
     <style>#include("bootstrap.min.css")</style>
     <style>#include("style.css")</style>
     <link rel="shortcut icon" href="../../assets/favicon.ico">
-</head>

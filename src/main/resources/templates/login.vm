@@ -1,4 +1,5 @@
 #parse("include/header.vm")
+</head>
 <body class="body-login">
 <div class="container login-wrapper d-flex flex-column align-items-center justify-content-center">
     <h1 class="color-primary mt-5 mb-5">Schulverwaltung Login</h1>
