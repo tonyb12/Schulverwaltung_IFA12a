@@ -79,5 +79,19 @@
         </div>
     </div>
 </div>
+<div class="container student-info">
+    <h2 class="color-primary">Hinweise zum Schuljahresbeginn</h2>
+    <h3 class="color-primary">Mitzubringende Unterlagen am 1. Schultag</h3>
+    <ul>
+        <li>Papier und Schreibzeug</li>
+        <li>Lehrvertrag (wenn bereits vorhanden)</li>
+        <li>Abschlusszeugnis (Kopie) der zuletzt besuchten Schule</li>
+        <li>Passbild (Name auf die Rückseite schreiben)</li>
+        <li>Abmeldebescheinigung der Mittelschule (gibt es nur für Mittelschüler)</li>
+        <li>Erhebungsbogen für Umschüler (nur Umschüler, <a href="https://bs1-bt.de/service-download/erhebungsbogen-fuer-umschueler" target="_blank" title="Erhebungsbogen für Umschüler">Download hier</a>)</li>
+    </ul>
+    <h3 class="color-primary">Willkommensbroschüre</h3>
+    <p>Viele weitergehende Fragen können mit Hilfe unserer <a href="https://bs1-bt.de/service-download/willkommensbroschuere" target="_blank" title="Willkommensbroschüre">Willkommensbroschüre</a> geklärt werden, welche jeder Schüler zu Beginn des Schuljahres auch in gedruckter Form erhält.</p>
+</div>
 
 #parse("include/footer.vm")

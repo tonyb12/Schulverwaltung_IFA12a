@@ -1,10 +1,7 @@
 package com.schulverwaltung.unitofwork.interfaces
 
 import com.schulverwaltung.database.interfaces.ITransactionMiddleware
-import com.schulverwaltung.repository.interfaces.ISecretaryRepository
-import com.schulverwaltung.repository.interfaces.ISecretarySecretRepository
-import com.schulverwaltung.repository.interfaces.IStudentRepository
-import com.schulverwaltung.repository.interfaces.IStudentSecretRepository
+import com.schulverwaltung.repository.interfaces.*
 import org.jetbrains.exposed.sql.Database
 
 interface IUnitOfWork {
@@ -14,6 +11,7 @@ interface IUnitOfWork {
     val studentRepository: IStudentRepository
     val secretarySecretRepository: ISecretarySecretRepository
     val studentSecretRepository: IStudentSecretRepository
+    val csvImportHistoryRepository: ICsvImportHistoryRepository
 
     fun commit()
     fun rollback()
