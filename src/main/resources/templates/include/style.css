@@ -97,10 +97,11 @@ body {
 /* Student */
 
 .student-data,
-.class-data {
-    margin-top: 100px;
+.class-data,
+.student-info {
+    margin-top: 50px;
 }
-.class-data  {
+.student-info  {
     margin-bottom: 100px;
 }
 
