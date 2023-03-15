@@ -1,13 +1,13 @@
 package com.schulverwaltung.repository
 
 import com.schulverwaltung.database.objects.StudentSecrets
-import com.schulverwaltung.dto.interfaces.ISecret
 import com.schulverwaltung.dto.StudentSecret
-import com.schulverwaltung.repository.interfaces.ISecretRepository
+import com.schulverwaltung.dto.interfaces.ISecret
+import com.schulverwaltung.repository.interfaces.IStudentSecretRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
-class StudentsSecretRepository : ISecretRepository {
+class StudentsSecretRepository : IStudentSecretRepository {
     override fun getByUserName(userName: String): ISecret? {
         val secretRow = StudentSecrets.select { StudentSecrets.userName eq userName }.singleOrNull() ?: return null
         return StudentSecret.fromRow(secretRow)
@@ -44,7 +44,7 @@ class StudentsSecretRepository : ISecretRepository {
     }
 
     override fun delete(entity: ISecret): Int {
-        return StudentSecrets.deleteWhere {id eq entity.id }
+        return StudentSecrets.deleteWhere { id eq entity.id }
     }
 
     override fun deleteById(id: Int): Int {

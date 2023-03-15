@@ -1,63 +1,44 @@
 package com.schulverwaltung.unitofwork
 
 import com.schulverwaltung.database.exposed.ExposedDb
-import com.schulverwaltung.repository.SecretaryRepository
-import com.schulverwaltung.repository.SecretarySecretRepository
-import com.schulverwaltung.repository.StudentRepository
-import com.schulverwaltung.repository.StudentsSecretRepository
-import com.schulverwaltung.repository.interfaces.ISecretaryRepository
-import com.schulverwaltung.repository.interfaces.ISecretRepository
-import com.schulverwaltung.repository.interfaces.IStudentRepository
+import com.schulverwaltung.database.interfaces.ITransactionMiddleware
+import com.schulverwaltung.repository.interfaces.*
 import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 
-class UnitOfWork : IUnitOfWork {
-    val databaseConnection: Database
-    private var _secretaryRepository: ISecretaryRepository? = null
-    private var _studentRepository: IStudentRepository? = null
-    private var _secretarySecretRepository: ISecretRepository? = null
-    private var _studentSecretRepository: ISecretRepository? = null
+class UnitOfWork(
+    private val _transactionMiddleware: ITransactionMiddleware,
+    private var _secretaryRepository: ISecretaryRepository,
+    private var _studentRepository: IStudentRepository,
+    private val _secretarySecretRepository: ISecretarySecretRepository,
+    private val _studentSecretRepository: IStudentSecretRepository,
+    private val _csvHistoryImport: ICsvImportHistoryRepository
+) : IUnitOfWork {
+    override val databaseConnection: Database
+        get() = ExposedDb.connection
+    override val transactionMiddleware: ITransactionMiddleware
+        get() = _transactionMiddleware
 
-    constructor() {
-        this.databaseConnection = ExposedDb.connection
-    }
-    constructor(databaseConnection: Database) {
-        this.databaseConnection = databaseConnection
-    }
     override val secretaryRepository: ISecretaryRepository
-        get(): ISecretaryRepository {
-            if (_secretaryRepository == null) {
-                _secretaryRepository = SecretaryRepository()
-            }
-            return _secretaryRepository!!
-        }
+        get() = _secretaryRepository
 
     override val studentRepository: IStudentRepository
-        get(): IStudentRepository {
-            if (_studentRepository == null) {
-                _studentRepository = StudentRepository()
-            }
-            return _studentRepository!!
-        }
-    override val secretarySecretRepository: ISecretRepository
-        get(): ISecretRepository {
-            if (_secretarySecretRepository == null) {
-                _secretarySecretRepository = SecretarySecretRepository()
-            }
-            return _secretarySecretRepository!!
-        }
-    override val studentSecretRepository: ISecretRepository
-        get(): ISecretRepository {
-            if (_studentSecretRepository == null) {
-                _studentSecretRepository = StudentsSecretRepository()
-            }
-            return _studentSecretRepository!!
-        }
+        get() = _studentRepository
+
+    override val secretarySecretRepository: ISecretarySecretRepository
+        get() = _secretarySecretRepository
+
+    override val studentSecretRepository: IStudentSecretRepository
+        get() = _studentSecretRepository
+
+    override val csvImportHistoryRepository: ICsvImportHistoryRepository
+        get() = _csvHistoryImport
 
     override fun commit() {
         TransactionManager.current().commit()
     }
+
     override fun rollback() {
         TransactionManager.current().rollback()
     }

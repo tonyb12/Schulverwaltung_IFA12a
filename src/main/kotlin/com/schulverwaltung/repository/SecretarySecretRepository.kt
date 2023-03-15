@@ -1,13 +1,13 @@
 package com.schulverwaltung.repository
 
 import com.schulverwaltung.database.objects.SecretarySecrets
-import com.schulverwaltung.dto.interfaces.ISecret
 import com.schulverwaltung.dto.SecretarySecret
-import com.schulverwaltung.repository.interfaces.ISecretRepository
+import com.schulverwaltung.dto.interfaces.ISecret
+import com.schulverwaltung.repository.interfaces.ISecretarySecretRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
-class SecretarySecretRepository : ISecretRepository {
+class SecretarySecretRepository : ISecretarySecretRepository {
     override fun getByUserName(userName: String): ISecret? {
         val secretRow = SecretarySecrets.select { SecretarySecrets.userName eq userName }.singleOrNull() ?: return null
         return SecretarySecret.fromRow(secretRow)

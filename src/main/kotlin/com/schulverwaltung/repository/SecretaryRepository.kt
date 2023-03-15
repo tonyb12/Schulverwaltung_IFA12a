@@ -1,8 +1,8 @@
 package com.schulverwaltung.repository
 
 import com.schulverwaltung.database.objects.Secretaries
-import com.schulverwaltung.repository.interfaces.ISecretaryRepository
 import com.schulverwaltung.dto.Secretary
+import com.schulverwaltung.repository.interfaces.ISecretaryRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
@@ -34,8 +34,8 @@ class SecretaryRepository : ISecretaryRepository {
 
     override fun update(entity: Secretary): Int {
         return Secretaries.update {
-                it[firstName] = entity.firstName
-                it[surName] = entity.surName
+            it[firstName] = entity.firstName
+            it[surName] = entity.surName
         }
     }
 
@@ -44,7 +44,7 @@ class SecretaryRepository : ISecretaryRepository {
     }
 
     override fun deleteById(id: Int): Int {
-        return Secretaries.deleteWhere{ Secretaries.id eq id }
+        return Secretaries.deleteWhere { Secretaries.id eq id }
     }
 
     override fun deleteAll(): Int {
