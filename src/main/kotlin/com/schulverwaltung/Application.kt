@@ -2,10 +2,8 @@ package com.schulverwaltung
 
 
 import com.schulverwaltung.database.exposed.ExposedDb
-import com.schulverwaltung.database.objects.Secretaries
-import com.schulverwaltung.database.objects.SecretarySecrets
-import com.schulverwaltung.database.objects.StudentSecrets
-import com.schulverwaltung.database.objects.Students
+import com.schulverwaltung.database.objects.*
+import com.schulverwaltung.dto.CSVImportHistory
 
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -24,6 +22,8 @@ fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
         configureRouting()
         module()
+
+
     }.start(wait = true)
 }
 
@@ -40,6 +40,6 @@ fun Application.initDb() {
 }
 fun Application.database() {
     transaction(ExposedDb.connection) {
-        SchemaUtils.create(Students, Secretaries, SecretarySecrets, StudentSecrets)
+        SchemaUtils.create(Students, Secretaries, SecretarySecrets, StudentSecrets, CsvImportHistories)
     }
 }

@@ -4,10 +4,9 @@ import com.schulverwaltung.authentication.UserInfo
 import com.schulverwaltung.authentication.UserPrincipal
 import com.schulverwaltung.authentication.UserSession
 import com.schulverwaltung.authentication.UserType
-import com.schulverwaltung.controllers.SecretaryController
-import com.schulverwaltung.controllers.SecretarySecretController
-import com.schulverwaltung.controllers.StudentController
-import com.schulverwaltung.controllers.StudentsSecretController
+import com.schulverwaltung.controllers.*
+import com.schulverwaltung.database.objects.CsvImportHistories
+import com.schulverwaltung.dto.CSVImportHistory
 import com.schulverwaltung.dto.Secretary
 import com.schulverwaltung.utils.CsvReader
 import com.schulverwaltung.utils.PasswordHasher
@@ -24,7 +23,7 @@ import io.ktor.server.request.*
 import io.ktor.server.sessions.*
 import io.ktor.server.velocity.*
 import java.io.File
-
+import java.time.LocalDateTime
 
 
 fun Application.configureRouting() {
@@ -32,6 +31,7 @@ fun Application.configureRouting() {
     val studentsSecretController = StudentsSecretController()
     val studentController = StudentController()
     val secretaryController = SecretaryController()
+    val csvImportHistoryController = CSVImportHistoryController()
 
 
     val tokenList = mutableMapOf<String, UserInfo>()
@@ -102,6 +102,7 @@ fun Application.configureRouting() {
 
                 call.sessions.set(UserSession(token = token))
 
+
                 when (type) {
                     UserType.Student -> call.respondRedirect("/student")
                     UserType.Secretary -> call.respondRedirect("/secretary")
@@ -117,7 +118,12 @@ fun Application.configureRouting() {
                     val token = call.sessions.get<UserSession>()?.token
                     if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Secretary)) {
                         val secretary = secretaryController.getById(tokenList[token]?.userId!!)!!
-                        call.respond(VelocityContent("templates/secretary.vm", mapOf("secretary" to secretary)))
+                        val csvImportHistory = csvImportHistoryController.getLatest()
+
+                        call.respond(VelocityContent("templates/secretary.vm", mapOf("secretary" to secretary, "csvImportHistory" to csvImportHistory)))
+                        println("Test Time:" + csvImportHistory)
+
+
                     } else {
                         call.respondRedirect("/logout")
                     }
@@ -127,19 +133,23 @@ fun Application.configureRouting() {
                     if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Secretary)) {
 
                         val multipartData = call.receiveMultipart()
+
+
+
                         multipartData.forEachPart { partData ->
                             when (partData) {
                                 is PartData.FileItem -> {
 
+                                    val fileName = partData.originalFileName.orEmpty().toString()
                                     val fileBytes = partData.streamProvider()
                                     val parseData = CsvReader.readCsv(fileBytes)
                                     studentController.deleteAll()
                                     studentsSecretController.deleteAll()
                                     studentController.add(parseData)
                                     println("Test:" + parseData)
-
-//                                      call.respondRedirect("/secretary")
-                                        call.respond(VelocityContent("templates/secretary.vm", mapOf()))
+                                    println("Test FileName: " + multipartData.toString())
+                                    csvImportHistoryController.add(CSVImportHistory(0,LocalDateTime.now().toString(),fileName))
+                                        call.respondRedirect("/secretary")
 
                                 }
 
