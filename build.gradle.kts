@@ -38,6 +38,8 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
     implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-java-time
+    implementation("org.jetbrains.exposed:exposed-java-time:0.41.1")
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
 }

@@ -1,10 +1,8 @@
 package com.schulverwaltung.unitofwork
 
 import com.schulverwaltung.database.exposed.ExposedDb
-import com.schulverwaltung.repository.SecretaryRepository
-import com.schulverwaltung.repository.SecretarySecretRepository
-import com.schulverwaltung.repository.StudentRepository
-import com.schulverwaltung.repository.StudentsSecretRepository
+import com.schulverwaltung.repository.*
+import com.schulverwaltung.repository.interfaces.ICsvImportHistoryRepository
 import com.schulverwaltung.repository.interfaces.ISecretaryRepository
 import com.schulverwaltung.repository.interfaces.ISecretRepository
 import com.schulverwaltung.repository.interfaces.IStudentRepository
@@ -18,6 +16,7 @@ class UnitOfWork : IUnitOfWork {
     private var _studentRepository: IStudentRepository? = null
     private var _secretarySecretRepository: ISecretRepository? = null
     private var _studentSecretRepository: ISecretRepository? = null
+    private var _csvHistoryImport: ICsvImportHistoryRepository? = null
 
     constructor() {
         this.databaseConnection = ExposedDb.connection
@@ -53,6 +52,14 @@ class UnitOfWork : IUnitOfWork {
                 _studentSecretRepository = StudentsSecretRepository()
             }
             return _studentSecretRepository!!
+        }
+
+    override val csvImportHistoryRepository : ICsvImportHistoryRepository
+        get(): ICsvImportHistoryRepository{
+            if(_csvHistoryImport == null){
+                _csvHistoryImport = CSVImportHistoryRepository()
+            }
+            return _csvHistoryImport!!
         }
 
     override fun commit() {
