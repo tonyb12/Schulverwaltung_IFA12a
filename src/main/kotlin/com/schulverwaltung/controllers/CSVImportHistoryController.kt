@@ -7,7 +7,7 @@ import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 class CSVImportHistoryController(
     private val _unitOfWork: IUnitOfWork
 ) : ICsvHistoryController {
-    override suspend fun getLatest(): CSVImportHistory {
+    override suspend fun getLatest(): CSVImportHistory? {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             _unitOfWork.csvImportHistoryRepository.getLatest()
         }
@@ -27,11 +27,8 @@ class CSVImportHistoryController(
 
     override suspend fun add(entity: CSVImportHistory): CSVImportHistory {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
-            val csvImportHistory = _unitOfWork.csvImportHistoryRepository.add(entity)
-            _unitOfWork.csvImportHistoryRepository.add(CSVImportHistory(0, entity.uploadTime, entity.fileName))
-            return@newTransactionScope csvImportHistory
+            _unitOfWork.csvImportHistoryRepository.add(entity)
         }
-
     }
 
     override suspend fun add(entities: List<CSVImportHistory>): List<CSVImportHistory> {

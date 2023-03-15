@@ -7,9 +7,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class CSVImportHistoryRepository : ICsvImportHistoryRepository {
-    override fun getLatest(): CSVImportHistory {
+    override fun getLatest(): CSVImportHistory? {
         val csvImportHistory =
-            CsvImportHistories.selectAll().orderBy(CsvImportHistories.id, SortOrder.DESC).limit(1).single()
+            CsvImportHistories.selectAll().orderBy(CsvImportHistories.id, SortOrder.DESC).limit(1).singleOrNull()
+                ?: return null
 
         return CSVImportHistory.fromRow(csvImportHistory)
     }
@@ -25,7 +26,6 @@ class CSVImportHistoryRepository : ICsvImportHistoryRepository {
 
     override fun add(entity: CSVImportHistory): CSVImportHistory {
         val id = CsvImportHistories.insert {
-            it[id] = entity.id
             it[uploadTime] = entity.uploadTime
             it[fileName] = entity.fileName
         } get CsvImportHistories.id
@@ -34,8 +34,8 @@ class CSVImportHistoryRepository : ICsvImportHistoryRepository {
 
     override fun add(entities: List<CSVImportHistory>): List<CSVImportHistory> {
         return CsvImportHistories.batchInsert(entities) {
-            this[CsvImportHistories.id] = it.id
             this[CsvImportHistories.uploadTime] = it.uploadTime
+            this[CsvImportHistories.fileName] = it.fileName
         }.toList().map { CSVImportHistory.fromRow(it) }
     }
 

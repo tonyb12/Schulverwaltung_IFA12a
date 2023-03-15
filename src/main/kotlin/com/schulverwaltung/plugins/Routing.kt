@@ -22,6 +22,7 @@ import io.ktor.server.velocity.*
 import org.koin.ktor.ext.inject
 import java.io.File
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 fun Application.configureRouting() {
@@ -46,7 +47,7 @@ fun Application.configureRouting() {
     install(Sessions) {
         cookie<UserSession>("user_session") {
             cookie.path = "/"
-            cookie.maxAgeInSeconds = 60
+            cookie.maxAgeInSeconds = 600
         }
     }
 
@@ -115,7 +116,7 @@ fun Application.configureRouting() {
                     val token = call.sessions.get<UserSession>()?.token
                     if (tokenList.containsKey(token) && (tokenList[token]?.type == UserType.Secretary)) {
                         val secretary = secretaryController.getById(tokenList[token]?.userId!!)!!
-                        val csvImportHistory = csvImportHistoryController.getLatest()
+                        val csvImportHistory = csvImportHistoryController.getLatest() ?: CSVImportHistory(0, "", "")
                         call.respond(
                             VelocityContent(
                                 "templates/secretary.vm",
@@ -145,7 +146,8 @@ fun Application.configureRouting() {
                                     csvImportHistoryController.add(
                                         CSVImportHistory(
                                             0,
-                                            LocalDateTime.now().toString(),
+                                            LocalDateTime.now()
+                                                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss")),
                                             fileName
                                         )
                                     )
