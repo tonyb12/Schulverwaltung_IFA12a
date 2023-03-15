@@ -1,5 +1,7 @@
 package com.schulverwaltung.unitofwork
 
+import com.schulverwaltung.database.ExposedTransactionMiddleware
+import com.schulverwaltung.database.ITransactionMiddleware
 import com.schulverwaltung.database.exposed.ExposedDb
 import com.schulverwaltung.repository.SecretaryRepository
 import com.schulverwaltung.repository.SecretarySecretRepository
@@ -10,10 +12,12 @@ import com.schulverwaltung.repository.interfaces.ISecretRepository
 import com.schulverwaltung.repository.interfaces.IStudentRepository
 import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 
 class UnitOfWork : IUnitOfWork {
     val databaseConnection: Database
+    val transactionMiddleware: ITransactionMiddleware<Transaction>
     private var _secretaryRepository: ISecretaryRepository? = null
     private var _studentRepository: IStudentRepository? = null
     private var _secretarySecretRepository: ISecretRepository? = null
@@ -21,9 +25,11 @@ class UnitOfWork : IUnitOfWork {
 
     constructor() {
         this.databaseConnection = ExposedDb.connection
+        this.transactionMiddleware = ExposedTransactionMiddleware()
     }
-    constructor(databaseConnection: Database) {
+    constructor(databaseConnection: Database, transactionMiddleware: ITransactionMiddleware<Transaction>) {
         this.databaseConnection = databaseConnection
+        this.transactionMiddleware = transactionMiddleware
     }
     override val secretaryRepository: ISecretaryRepository
         get(): ISecretaryRepository {
