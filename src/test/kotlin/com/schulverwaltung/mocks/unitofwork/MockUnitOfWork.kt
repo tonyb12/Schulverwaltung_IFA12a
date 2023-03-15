@@ -1,24 +1,21 @@
-package com.schulverwaltung.unitofwork
+package com.schulverwaltung.mocks.unitofwork
 
-import com.schulverwaltung.database.exposed.ExposedDb
 import com.schulverwaltung.database.interfaces.ITransactionMiddleware
-import com.schulverwaltung.repository.interfaces.ISecretaryRepository
-import com.schulverwaltung.repository.interfaces.ISecretarySecretRepository
-import com.schulverwaltung.repository.interfaces.IStudentRepository
-import com.schulverwaltung.repository.interfaces.IStudentSecretRepository
+import com.schulverwaltung.repository.interfaces.*
 import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.mockito.Mockito
 
-class UnitOfWork(
+class MockUnitOfWork(
     private val _transactionMiddleware: ITransactionMiddleware,
     private var _secretaryRepository: ISecretaryRepository,
     private var _studentRepository: IStudentRepository,
-    private val _secretarySecretRepository: ISecretarySecretRepository,
-    private val _studentSecretRepository: IStudentSecretRepository
+    private var _secretarySecretRepository: ISecretarySecretRepository,
+    private var _studentSecretRepository: IStudentSecretRepository,
 ) : IUnitOfWork {
     override val databaseConnection: Database
-        get() = ExposedDb.connection
+        get() = Mockito.mock(Database::class.java)
     override val transactionMiddleware: ITransactionMiddleware
         get() = _transactionMiddleware
 
@@ -33,10 +30,7 @@ class UnitOfWork(
         get() = _studentSecretRepository
 
     override fun commit() {
-        TransactionManager.current().commit()
     }
-
     override fun rollback() {
-        TransactionManager.current().rollback()
     }
 }

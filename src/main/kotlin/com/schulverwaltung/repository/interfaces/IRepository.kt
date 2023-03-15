@@ -2,7 +2,7 @@ package com.schulverwaltung.repository.interfaces
 
 import org.jetbrains.exposed.sql.Transaction
 
-interface IRepository <T,K>{
+interface IRepository<T, K> {
     fun getAll(): List<T>
     fun getById(id: K): T?
     fun add(entity: T): T
