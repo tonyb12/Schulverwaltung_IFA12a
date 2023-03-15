@@ -1,6 +1,6 @@
 package com.schulverwaltung.controllers.interfaces
 
-interface IController<T,K> {
+interface IController<T, K> {
     suspend fun getAll(): List<T>
     suspend fun getById(id: K): T?
     suspend fun add(entity: T): T

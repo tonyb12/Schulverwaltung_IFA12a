@@ -1,13 +1,12 @@
 package com.schulverwaltung.utils
 
+import com.schulverwaltung.utils.interfaces.IBirthdayParser
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class BirthdayParser {
-    companion object {
-        fun parse(date: String): String {
-            val tmpDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-            return tmpDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")).toString()
-        }
+class BirthdayParser : IBirthdayParser {
+    override fun parse(date: String): String {
+        val tmpDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        return tmpDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")).toString()
     }
 }

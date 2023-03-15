@@ -1,8 +1,8 @@
 package com.schulverwaltung.repository
 
 import com.schulverwaltung.database.objects.Students
-import com.schulverwaltung.repository.interfaces.IStudentRepository
 import com.schulverwaltung.dto.Student
+import com.schulverwaltung.repository.interfaces.IStudentRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
@@ -12,8 +12,8 @@ class StudentRepository : IStudentRepository {
     }
 
     override fun getById(id: Int): Student? {
-            val student = Students.select { Students.id eq id }.singleOrNull() ?: return null
-            return Student.fromRow(student)
+        val student = Students.select { Students.id eq id }.singleOrNull() ?: return null
+        return Student.fromRow(student)
     }
 
     override fun add(entity: Student): Student {
@@ -24,7 +24,7 @@ class StudentRepository : IStudentRepository {
             it[birthday] = entity.birthday
             it[email] = entity.email
         } get Students.id
-        return Student.fromRow(Students.select{Students.id eq id}.single())
+        return Student.fromRow(Students.select { Students.id eq id }.single())
     }
 
     override fun add(entities: List<Student>): List<Student> {
@@ -52,7 +52,7 @@ class StudentRepository : IStudentRepository {
     }
 
     override fun deleteById(id: Int): Int {
-        return Students.deleteWhere{ Students.id eq id }
+        return Students.deleteWhere { Students.id eq id }
     }
 
     override fun deleteAll(): Int {

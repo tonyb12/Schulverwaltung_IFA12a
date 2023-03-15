@@ -42,4 +42,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:0.41.1")
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    implementation("io.insert-koin:koin-ktor:3.3.1")
+    testImplementation("io.insert-koin:koin-test:3.3.3")
+    testImplementation("io.insert-koin:koin-test-junit4:3.3.3")
 }

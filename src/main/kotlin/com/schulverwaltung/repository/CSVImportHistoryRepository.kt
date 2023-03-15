@@ -7,8 +7,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class CSVImportHistoryRepository : ICsvImportHistoryRepository {
-    override suspend fun getLatest(): CSVImportHistory {
-        val csvImportHistory = CsvImportHistories.selectAll().orderBy(CsvImportHistories.id,SortOrder.DESC).limit(1).single()
+    override fun getLatest(): CSVImportHistory? {
+        val csvImportHistory =
+            CsvImportHistories.selectAll().orderBy(CsvImportHistories.id, SortOrder.DESC).limit(1).singleOrNull()
+                ?: return null
 
         return CSVImportHistory.fromRow(csvImportHistory)
     }
@@ -18,13 +20,12 @@ class CSVImportHistoryRepository : ICsvImportHistoryRepository {
     }
 
     override fun getById(id: Int): CSVImportHistory? {
-        val csvImportHistory = CsvImportHistories.select{ CsvImportHistories.id eq id}.singleOrNull() ?: return null
+        val csvImportHistory = CsvImportHistories.select { CsvImportHistories.id eq id }.singleOrNull() ?: return null
         return CSVImportHistory.fromRow(csvImportHistory)
     }
 
     override fun add(entity: CSVImportHistory): CSVImportHistory {
         val id = CsvImportHistories.insert {
-            it[id] = entity.id
             it[uploadTime] = entity.uploadTime
             it[fileName] = entity.fileName
         } get CsvImportHistories.id
@@ -32,10 +33,10 @@ class CSVImportHistoryRepository : ICsvImportHistoryRepository {
     }
 
     override fun add(entities: List<CSVImportHistory>): List<CSVImportHistory> {
-        return CsvImportHistories.batchInsert(entities){
-            this[CsvImportHistories.id] = it.id
+        return CsvImportHistories.batchInsert(entities) {
             this[CsvImportHistories.uploadTime] = it.uploadTime
-        }.toList().map{ CSVImportHistory.fromRow(it)}
+            this[CsvImportHistories.fileName] = it.fileName
+        }.toList().map { CSVImportHistory.fromRow(it) }
     }
 
     override fun update(entity: CSVImportHistory): Int {
@@ -50,7 +51,7 @@ class CSVImportHistoryRepository : ICsvImportHistoryRepository {
     }
 
     override fun deleteById(id: Int): Int {
-        return CsvImportHistories.deleteWhere{ CsvImportHistories.id eq id}
+        return CsvImportHistories.deleteWhere { CsvImportHistories.id eq id }
     }
 
     override fun deleteAll(): Int {
