@@ -16,7 +16,7 @@ data class SecretarySecret(
             id = row[SecretarySecrets.id],
             userName = row[SecretarySecrets.userName],
             hash = row[SecretarySecrets.hash],
-            userId = row[SecretarySecrets.userId]
+            userId = row[SecretarySecrets.userId].value
         )
     }
 }
@@ -32,7 +32,7 @@ data class StudentSecret(
             id = row[StudentSecrets.id],
             userName = row[StudentSecrets.userName],
             hash = row[StudentSecrets.hash],
-            userId = row[StudentSecrets.userId]
+            userId = row[StudentSecrets.userId].value
         )
     }
 }

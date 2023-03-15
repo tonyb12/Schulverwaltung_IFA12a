@@ -13,7 +13,7 @@ data class Student(
 ) {
     companion object {
         fun fromRow(row: ResultRow): Student = Student(
-            id = row[Students.id],
+            id = row[Students.id].value,
             firstName = row[Students.firstName],
             surName = row[Students.surName],
             className = row[Students.className],
