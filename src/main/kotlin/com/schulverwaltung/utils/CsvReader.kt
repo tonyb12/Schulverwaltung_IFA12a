@@ -16,7 +16,8 @@ class CsvReader {
                     it["Familienname"] ?: "",
                     it["Klasse"] ?: "",
                     it["Geburtsdatum"] ?: "",
-                    it["Schüler/in E-Mail"] ?: ""
+                    it["Schüler/in E-Mail"] ?: "",
+                    it["Ausbild. Ausbildungsberuf (Langbez. männl.)"] ?: ""
                 )
             }
         }

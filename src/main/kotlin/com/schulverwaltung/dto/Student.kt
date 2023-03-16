@@ -9,7 +9,8 @@ data class Student(
     val surName: String,
     val className: String,
     val birthday: String,
-    val email: String
+    val email: String,
+    val jobDesc: String
 ) {
     companion object {
         fun fromRow(row: ResultRow): Student = Student(
@@ -18,7 +19,8 @@ data class Student(
             surName = row[Students.surName],
             className = row[Students.className],
             birthday = row[Students.birthday],
-            email = row[Students.email]
+            email = row[Students.email],
+            jobDesc = row[Students.jobDesc]
         )
     }
 }

@@ -22,7 +22,7 @@ class MockStudentRepository : IStudentRepository {
             mockTable.sortBy { it.id }
             id = mockTable.last().id
         }
-        val tmpStudent = Student(id, entity.firstName, entity.surName, entity.className, entity.birthday, entity.email)
+        val tmpStudent = Student(id, entity.firstName, entity.surName, entity.className, entity.birthday, entity.email, entity.jobDesc)
         mockTable.add(tmpStudent)
         return tmpStudent
     }
