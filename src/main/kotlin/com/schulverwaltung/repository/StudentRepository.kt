@@ -23,6 +23,7 @@ class StudentRepository : IStudentRepository {
             it[className] = entity.className
             it[birthday] = entity.birthday
             it[email] = entity.email
+            it[jobDesc] = entity.jobDesc
         } get Students.id
         return Student.fromRow(Students.select { Students.id eq id }.single())
     }
@@ -34,6 +35,7 @@ class StudentRepository : IStudentRepository {
             this[Students.className] = it.className
             this[Students.birthday] = it.birthday
             this[Students.email] = it.email
+            this[Students.jobDesc] = it.jobDesc
         }.toList().map { Student.fromRow(it) }
     }
 
@@ -44,6 +46,7 @@ class StudentRepository : IStudentRepository {
             it[className] = entity.className
             it[birthday] = entity.birthday
             it[email] = entity.email
+            it[jobDesc] = entity.jobDesc
         }
     }
 

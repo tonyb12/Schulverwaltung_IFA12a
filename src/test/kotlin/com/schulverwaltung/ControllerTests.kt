@@ -70,11 +70,11 @@ class ControllerTests: KoinTest {
         var students = studentController.getAll()
         assertTrue(students.isEmpty())
 
-        studentController.add(Student(0, "Hans", "Peter", "IT10", "20.12.2022", "test.test@gmail.com"))
+        studentController.add(Student(0, "Hans", "Peter", "IT10", "20.12.2022", "test.test@gmail.com", "Fachinformatiker - Anwendungsentwicklung"))
         students = studentController.getAll()
         assertFalse(students.isEmpty())
 
-        val expectedStudentList = listOf(Student(1, "Hans", "Peter", "IT10", "20.12.2022", "test.test@gmail.com"))
+        val expectedStudentList = listOf(Student(1, "Hans", "Peter", "IT10", "20.12.2022", "test.test@gmail.com", "Fachinformatiker - Anwendungsentwicklung"))
 
         assertEquals(expectedStudentList, students)
 

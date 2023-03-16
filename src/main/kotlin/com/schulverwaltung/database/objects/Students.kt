@@ -8,4 +8,5 @@ object Students : IntIdTable() {
     val className = varchar("className", 1024)
     val birthday = varchar("birthday", 1024)
     val email = varchar("email", 1024)
+    val jobDesc = text("jobDesc")
 }
