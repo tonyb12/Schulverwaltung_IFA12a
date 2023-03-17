@@ -6,14 +6,14 @@ import org.jetbrains.exposed.sql.Database
 
 /**
  * UnitOfWork
- * Can be used to bundle database operations into units that can collectively be committed or a rollbacked
+ * Can be used to bundle database operations into units that can collectively be committed or rollbacked
  *
- * @property _transactionMiddleware
- * @property _secretaryRepository
- * @property _studentRepository
- * @property _secretarySecretRepository
- * @property _studentSecretRepository
- * @property _csvHistoryImport
+ * @property transactionMiddleware
+ * @property secretaryRepository
+ * @property studentRepository
+ * @property secretarySecretRepository
+ * @property studentSecretRepository
+ * @property csvImportHistoryRepository
  */
 interface IUnitOfWork {
     val databaseConnection: Database

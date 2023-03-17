@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.transactions.TransactionManager
 
 /**
  * UnitOfWork
- * Can be used to bundle database operations into units that can collectively be committed or a rollbacked
+ * Can be used to bundle database operations into units that can collectively be committed or rollbacked
  *
  * @property _transactionMiddleware
  * @property _secretaryRepository
