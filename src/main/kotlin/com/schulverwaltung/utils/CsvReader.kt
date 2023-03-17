@@ -8,10 +8,10 @@ class CsvReader {
 
     companion object {
 
-        fun readCsv(inputStream: InputStream): List<Student> {
+        fun readStudentCsv(inputStream: InputStream): List<Student> {
             return csvReader { delimiter = ';' }.readAllWithHeader(inputStream).map {
                 Student(
-                    1,
+                    0,
                     it["Rufname"] ?: "",
                     it["Familienname"] ?: "",
                     it["Klasse"] ?: "",

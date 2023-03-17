@@ -139,7 +139,7 @@ fun Application.configureRouting() {
 
                                     val fileName = partData.originalFileName.orEmpty().toString()
                                     val fileBytes = partData.streamProvider()
-                                    val parseData = CsvReader.readCsv(fileBytes)
+                                    val parseData = CsvReader.readStudentCsv(fileBytes)
                                     studentsSecretController.deleteAll()
                                     studentController.deleteAll()
                                     studentController.add(parseData)
