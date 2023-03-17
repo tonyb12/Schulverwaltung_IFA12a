@@ -16,6 +16,7 @@ open class StudentSecretController(private val _unitOfWork: IUnitOfWork) : IStud
     /**
      * Gets a StudentSecret by its username
      *
+     * @param userName Name of the user
      * @return StudentSecret that fulfills the contract ISecret or null
      */
     override suspend fun getByUserName(userName: String): ISecret? {

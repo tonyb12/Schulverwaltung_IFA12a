@@ -14,6 +14,7 @@ open class SecretarySecretController(private val _unitOfWork: IUnitOfWork) : ISe
     /**
      * Gets a SecretarySecret by its username
      *
+     * @param userName Name of the user
      * @return SecretarySecret that fulfills the contract ISecret or null
      */
     override suspend fun getByUserName(userName: String): ISecret? {
