@@ -5,7 +5,11 @@ import com.schulverwaltung.dto.Student
 import com.schulverwaltung.repository.interfaces.IStudentRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-
+/**
+ * StudentRepository acts as an adapter between the controller and database.
+ * It contains the logic to access the database and parses the data fetched from the database to an application wide standard
+ *
+ */
 class StudentRepository : IStudentRepository {
     /**
      * Selects all entries from the database

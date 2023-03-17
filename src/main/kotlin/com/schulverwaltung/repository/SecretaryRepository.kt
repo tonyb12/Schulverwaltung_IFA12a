@@ -5,7 +5,11 @@ import com.schulverwaltung.dto.Secretary
 import com.schulverwaltung.repository.interfaces.ISecretaryRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-
+/**
+ * SecretaryRepository acts as an adapter between the controller and database.
+ * It contains the logic to access the database and parses the data fetched from the database to an application wide standard
+ *
+ */
 class SecretaryRepository : ISecretaryRepository {
     /**
      * Selects all entries from the database

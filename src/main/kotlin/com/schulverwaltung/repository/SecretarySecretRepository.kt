@@ -6,7 +6,11 @@ import com.schulverwaltung.dto.interfaces.ISecret
 import com.schulverwaltung.repository.interfaces.ISecretarySecretRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-
+/**
+ * SecretarySecretRepository acts as an adapter between the controller and database.
+ * It contains the logic to access the database and parses the data fetched from the database to an application wide standard
+ *
+ */
 class SecretarySecretRepository : ISecretarySecretRepository {
     /**
      * Gets an entry by its username

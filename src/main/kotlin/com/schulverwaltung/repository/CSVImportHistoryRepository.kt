@@ -6,6 +6,11 @@ import com.schulverwaltung.repository.interfaces.ICsvImportHistoryRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
+/**
+ * CSVImportHistoryRepository acts as an adapter between the controller and database.
+ * It contains the logic to access the database and parses the data fetched from the database to an application wide standard
+ *
+ */
 class CSVImportHistoryRepository : ICsvImportHistoryRepository {
     /**
      * Gets the latest entry sorted by the id
