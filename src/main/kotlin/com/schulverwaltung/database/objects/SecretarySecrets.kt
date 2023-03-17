@@ -1,7 +1,10 @@
 package com.schulverwaltung.database.objects
 
 import org.jetbrains.exposed.sql.Table
-
+/**
+ * Table definition for SecretarySecrets
+ *
+ */
 object SecretarySecrets : Table() {
     val id = integer("id").autoIncrement()
     val userName = char("userName", 14)

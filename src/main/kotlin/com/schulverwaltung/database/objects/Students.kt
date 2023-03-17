@@ -1,7 +1,10 @@
 package com.schulverwaltung.database.objects
 
 import org.jetbrains.exposed.dao.id.IntIdTable
-
+/**
+ * Table definition for Students
+ *
+ */
 object Students : IntIdTable() {
     val firstName = varchar("firstName", 1024)
     val surName = varchar("surName", 1024)

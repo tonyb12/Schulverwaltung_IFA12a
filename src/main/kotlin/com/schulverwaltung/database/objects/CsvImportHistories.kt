@@ -2,7 +2,10 @@ package com.schulverwaltung.database.objects
 
 import org.jetbrains.exposed.sql.Table
 
-
+/**
+ * Table definition for CsvImportHistories
+ *
+ */
 object CsvImportHistories : Table() {
 
     val id = integer("id").autoIncrement()
