@@ -7,7 +7,7 @@ import com.schulverwaltung.repository.interfaces.IStudentSecretRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
-class StudentsSecretRepository : IStudentSecretRepository {
+class StudentSecretRepository : IStudentSecretRepository {
     override fun getByUserName(userName: String): ISecret? {
         val secretRow = StudentSecrets.select { StudentSecrets.userName eq userName }.singleOrNull() ?: return null
         return StudentSecret.fromRow(secretRow)

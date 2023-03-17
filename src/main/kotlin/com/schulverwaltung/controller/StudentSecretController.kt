@@ -1,6 +1,6 @@
-package com.schulverwaltung.controllers
+package com.schulverwaltung.controller
 
-import com.schulverwaltung.controllers.interfaces.IStudentSecretController
+import com.schulverwaltung.controller.interfaces.IStudentSecretController
 import com.schulverwaltung.dto.interfaces.ISecret
 import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 

@@ -4,7 +4,7 @@ import com.schulverwaltung.authentication.UserInfo
 import com.schulverwaltung.authentication.UserPrincipal
 import com.schulverwaltung.authentication.UserSession
 import com.schulverwaltung.authentication.UserType
-import com.schulverwaltung.controllers.interfaces.*
+import com.schulverwaltung.controller.interfaces.*
 import com.schulverwaltung.dto.CSVImportHistory
 import com.schulverwaltung.utils.CsvReader
 import com.schulverwaltung.utils.interfaces.IPasswordHasher

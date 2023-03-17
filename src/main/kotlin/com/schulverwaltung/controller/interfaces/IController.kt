@@ -1,4 +1,4 @@
-package com.schulverwaltung.controllers.interfaces
+package com.schulverwaltung.controller.interfaces
 
 interface IController<T, K> {
     suspend fun getAll(): List<T>

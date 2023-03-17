@@ -1,4 +1,4 @@
-package com.schulverwaltung.controllers.interfaces
+package com.schulverwaltung.controller.interfaces
 
 import com.schulverwaltung.dto.Secretary
 

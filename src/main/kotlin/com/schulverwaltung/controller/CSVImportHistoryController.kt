@@ -1,6 +1,6 @@
-package com.schulverwaltung.controllers
+package com.schulverwaltung.controller
 
-import com.schulverwaltung.controllers.interfaces.ICsvHistoryController
+import com.schulverwaltung.controller.interfaces.ICsvHistoryController
 import com.schulverwaltung.dto.CSVImportHistory
 import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 

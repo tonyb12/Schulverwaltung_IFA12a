@@ -1,11 +1,9 @@
 package com.schulverwaltung.controller
 
-import com.schulverwaltung.controllers.SecretarySecretController
-import com.schulverwaltung.controllers.StudentsSecretController
-import com.schulverwaltung.controllers.interfaces.ISecretaryController
-import com.schulverwaltung.controllers.interfaces.ISecretarySecretController
-import com.schulverwaltung.controllers.interfaces.IStudentController
-import com.schulverwaltung.controllers.interfaces.IStudentSecretController
+import com.schulverwaltung.controller.interfaces.ISecretaryController
+import com.schulverwaltung.controller.interfaces.ISecretarySecretController
+import com.schulverwaltung.controller.interfaces.IStudentController
+import com.schulverwaltung.controller.interfaces.IStudentSecretController
 import com.schulverwaltung.database.interfaces.ITransactionMiddleware
 import com.schulverwaltung.dto.StudentSecret
 import com.schulverwaltung.mocks.controller.MockSecretaryControllerExtension
@@ -33,7 +31,7 @@ import org.koin.test.get
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class StudentsSecretControllerTest : KoinTest {
+class StudentSecretControllerTest : KoinTest {
     @get:Rule
     val koinTestRule = KoinTestRule.create {
         modules(module {
@@ -42,7 +40,7 @@ class StudentsSecretControllerTest : KoinTest {
             factory<IBirthdayParser> { BirthdayParser() }
             factory<IUserNameGenerator> { UserNameGenerator(get()) }
             single<IStudentRepository> { MockStudentRepository() }
-            single<IStudentSecretRepository> { MockStudentsSecretRepository() }
+            single<IStudentSecretRepository> { MockStudentSecretRepository() }
             single<ISecretaryRepository> { MockSecretaryRepository() }
             single<ISecretarySecretRepository> { MockSecretarySecretRepository() }
             single<ICsvImportHistoryRepository> { MockCsvImportHistoryRepository() }

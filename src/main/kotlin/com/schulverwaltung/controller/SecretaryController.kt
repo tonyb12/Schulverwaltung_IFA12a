@@ -1,7 +1,7 @@
-package com.schulverwaltung.controllers
+package com.schulverwaltung.controller
 
 import com.schulverwaltung.MultiException
-import com.schulverwaltung.controllers.interfaces.ISecretaryController
+import com.schulverwaltung.controller.interfaces.ISecretaryController
 import com.schulverwaltung.dto.Secretary
 import com.schulverwaltung.dto.SecretarySecret
 import com.schulverwaltung.dto.interfaces.ISecret
