@@ -6,6 +6,7 @@ import org.jetbrains.exposed.sql.Transaction
 
 class MockSecretaryRepository : ISecretaryRepository {
     private var mockTable = mutableListOf<Secretary>()
+    var autoIncrementResetCount = 0
     override fun getAll(): List<Secretary> {
         return mockTable
     }
@@ -21,6 +22,7 @@ class MockSecretaryRepository : ISecretaryRepository {
         if (mockTable.isNotEmpty()) {
             mockTable.sortBy { it.id }
             id = mockTable.last().id
+            id++
         }
         val tmpSecretary = Secretary(id, entity.firstName, entity.surName)
         mockTable.add(tmpSecretary)
@@ -56,5 +58,6 @@ class MockSecretaryRepository : ISecretaryRepository {
     }
 
     override fun resetAutoIncrement(transaction: Transaction) {
+        autoIncrementResetCount++
     }
 }

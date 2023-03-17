@@ -7,7 +7,6 @@ import com.schulverwaltung.dto.SecretarySecret
 import com.schulverwaltung.dto.interfaces.ISecret
 import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 import com.schulverwaltung.utils.interfaces.IPasswordHasher
-import java.time.format.DateTimeParseException
 
 open class SecretaryController(
     private val _unitOfWork: IUnitOfWork,

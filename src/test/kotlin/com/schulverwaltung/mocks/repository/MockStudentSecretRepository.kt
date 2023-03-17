@@ -5,7 +5,7 @@ import com.schulverwaltung.dto.interfaces.ISecret
 import com.schulverwaltung.repository.interfaces.IStudentSecretRepository
 import org.jetbrains.exposed.sql.Transaction
 
-class MockStudentsSecretRepository : IStudentSecretRepository {
+class MockStudentSecretRepository : IStudentSecretRepository {
     private var mockTable = mutableListOf<StudentSecret>()
     var autoIncrementResetCount = 0
     override fun getByUserName(userName: String): ISecret? {
