@@ -18,7 +18,7 @@ class ExposedDb {
         /**
          * Jdbc Url and settings for the database connection
          */
-        private const val JDBC_URL = "jdbc:mysql://localhost:33306/db?rewriteBatchedStatements=true"
+        private const val JDBC_URL = "jdbc:mysql://localhost:3306/db?rewriteBatchedStatements=true"
 
         /**
          * Connection to the database
