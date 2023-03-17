@@ -1,4 +1,4 @@
-package com.schulverwaltung
+package com.schulverwaltung.exceptions
 
 /**
  * Multi exception
@@ -6,11 +6,10 @@ package com.schulverwaltung
  * The exceptionsList is still accessible from the outside
  *
  */
-class MultiException : Exception {
-    val exceptionList: List<Exception>
+class MultiException(val exceptionList: List<Exception>) : Exception() {
     override val message: String
-    constructor(exceptionList: List<Exception>) {
-        this.exceptionList = exceptionList
+
+    init {
         val tmp =  exceptionList.map { it }.toString()
         this.message = tmp
     }
