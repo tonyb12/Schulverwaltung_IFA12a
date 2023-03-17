@@ -4,7 +4,7 @@ import com.schulverwaltung.controllers.interfaces.ISecretarySecretController
 import com.schulverwaltung.dto.interfaces.ISecret
 import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 
-class SecretarySecretController(private val _unitOfWork: IUnitOfWork) : ISecretarySecretController {
+open class SecretarySecretController(private val _unitOfWork: IUnitOfWork) : ISecretarySecretController {
     override suspend fun getByUserName(userName: String): ISecret? {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             _unitOfWork.secretarySecretRepository.getByUserName(userName)

@@ -63,6 +63,4 @@ class CSVImportHistoryController(
             return@newTransactionScope result
         }
     }
-
-
 }
