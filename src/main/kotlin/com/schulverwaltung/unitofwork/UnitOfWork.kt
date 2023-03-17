@@ -7,6 +7,17 @@ import com.schulverwaltung.unitofwork.interfaces.IUnitOfWork
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 
+/**
+ * UnitOfWork
+ * Can be used to bundle database operations into units that can collectively be committed or rollbacked
+ *
+ * @property _transactionMiddleware
+ * @property _secretaryRepository
+ * @property _studentRepository
+ * @property _secretarySecretRepository
+ * @property _studentSecretRepository
+ * @property _csvHistoryImport
+ */
 class UnitOfWork(
     private val _transactionMiddleware: ITransactionMiddleware,
     private var _secretaryRepository: ISecretaryRepository,
@@ -35,10 +46,18 @@ class UnitOfWork(
     override val csvImportHistoryRepository: ICsvImportHistoryRepository
         get() = _csvHistoryImport
 
+    /**
+     * Commit all operations of the current transaction to the database
+     *
+     */
     override fun commit() {
         TransactionManager.current().commit()
     }
 
+    /**
+     * Rollback all operations of the current transaction
+     *
+     */
     override fun rollback() {
         TransactionManager.current().rollback()
     }

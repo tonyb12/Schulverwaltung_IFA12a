@@ -1,8 +1,8 @@
 package com.schulverwaltung
 
 
-import com.schulverwaltung.controllers.*
-import com.schulverwaltung.controllers.interfaces.*
+import com.schulverwaltung.controller.*
+import com.schulverwaltung.controller.interfaces.*
 import com.schulverwaltung.database.ExposedTransactionMiddleware
 import com.schulverwaltung.database.interfaces.ITransactionMiddleware
 import com.schulverwaltung.plugins.configureRouting
@@ -34,13 +34,13 @@ val prodDIModule = module {
     single<IBirthdayParser> { BirthdayParser() }
     singleOf(::UserNameGenerator) bind IUserNameGenerator::class
     singleOf(::StudentRepository) bind IStudentRepository::class
-    singleOf(::StudentsSecretRepository) bind IStudentSecretRepository::class
+    singleOf(::StudentSecretRepository) bind IStudentSecretRepository::class
     singleOf(::SecretaryRepository) bind ISecretaryRepository::class
     singleOf(::SecretarySecretRepository) bind ISecretarySecretRepository::class
     singleOf(::CSVImportHistoryRepository) bind ICsvImportHistoryRepository::class
     singleOf(::UnitOfWork) bind IUnitOfWork::class
     singleOf(::StudentController) bind IStudentController::class
-    singleOf(::StudentsSecretController) bind IStudentSecretController::class
+    singleOf(::StudentSecretController) bind IStudentSecretController::class
     singleOf(::SecretaryController) bind ISecretaryController::class
     singleOf(::SecretarySecretController) bind ISecretarySecretController::class
     singleOf(::CSVImportHistoryController) bind ICsvHistoryController::class

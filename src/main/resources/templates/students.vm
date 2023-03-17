@@ -69,7 +69,7 @@
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Beruf:</u></span>
-            <span class="pt-3">$student.job</span>
+            <span class="pt-3">$student.jobDesc</span>
         </div>
         <div class="col-12 col-md-3 d-flex flex-column">
             <span class="color-primary"><u>Blockpläne:</u></span>

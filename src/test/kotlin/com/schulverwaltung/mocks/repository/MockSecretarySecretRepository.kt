@@ -7,6 +7,8 @@ import org.jetbrains.exposed.sql.Transaction
 
 class MockSecretarySecretRepository : ISecretarySecretRepository {
     private var mockTable = mutableListOf<SecretarySecret>()
+    var autoIncrementResetCount = 0
+
     override fun getByUserName(userName: String): ISecret? {
         return mockTable.find { it.userName == userName }
     }
@@ -26,6 +28,7 @@ class MockSecretarySecretRepository : ISecretarySecretRepository {
         if (mockTable.isNotEmpty()) {
             mockTable.sortBy { it.id }
             id = mockTable.last().id
+            id++
         }
         val tmpSecretarySecret = SecretarySecret(id, entity.userName, entity.hash, entity.userId)
         mockTable.add(tmpSecretarySecret)
@@ -61,5 +64,6 @@ class MockSecretarySecretRepository : ISecretarySecretRepository {
     }
 
     override fun resetAutoIncrement(transaction: Transaction) {
+        autoIncrementResetCount++
     }
 }

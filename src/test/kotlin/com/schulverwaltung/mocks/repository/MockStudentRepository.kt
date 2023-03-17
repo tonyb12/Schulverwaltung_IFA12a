@@ -1,11 +1,16 @@
 package com.schulverwaltung.mocks.repository
 
 import com.schulverwaltung.dto.Student
+import com.schulverwaltung.mocks.actions.Action
 import com.schulverwaltung.repository.interfaces.IStudentRepository
 import org.jetbrains.exposed.sql.Transaction
+import java.util.*
 
 class MockStudentRepository : IStudentRepository {
     private var mockTable = mutableListOf<Student>()
+    val actionStack: Stack<Pair<Action, Student>> = Stack()
+    var autoIncrementResetCount = 0
+
     override fun getAll(): List<Student> {
         return mockTable
     }
@@ -21,8 +26,18 @@ class MockStudentRepository : IStudentRepository {
         if (mockTable.isNotEmpty()) {
             mockTable.sortBy { it.id }
             id = mockTable.last().id
+            id++
         }
-        val tmpStudent = Student(id, entity.firstName, entity.surName, entity.className, entity.birthday, entity.email)
+        val tmpStudent = Student(
+            id,
+            entity.firstName,
+            entity.surName,
+            entity.className,
+            entity.birthday,
+            entity.email,
+            entity.jobDesc
+        )
+        actionStack.push(Pair(Action.Add, tmpStudent))
         mockTable.add(tmpStudent)
         return tmpStudent
     }
@@ -55,5 +70,7 @@ class MockStudentRepository : IStudentRepository {
         return length
     }
 
-    override fun resetAutoIncrement(transaction: Transaction) {}
+    override fun resetAutoIncrement(transaction: Transaction) {
+        autoIncrementResetCount++
+    }
 }
