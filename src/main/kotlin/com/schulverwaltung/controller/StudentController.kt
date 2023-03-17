@@ -12,7 +12,8 @@ import com.schulverwaltung.utils.interfaces.IUserNameGenerator
 import java.time.format.DateTimeParseException
 
 /**
- * StudentController
+ * StudentController acts as a middleware between the caller and the repository
+ * Holds main business logic
  *
  * @property _unitOfWork
  * @property _passwordHasher
@@ -25,12 +26,23 @@ open class StudentController(
     private val _userNameGenerator: IUserNameGenerator,
     private val _birthdayParser: IBirthdayParser
 ) : IStudentController {
+    /**
+     * Get a list of Students
+     *
+     * @return List of Student
+     */
     override suspend fun getAll(): List<Student> {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             _unitOfWork.studentRepository.getAll()
         }
     }
 
+    /**
+     * Gets a Student by its id
+     *
+     * @param id of the Student entry
+     * @return Student or null
+     */
     override suspend fun getById(id: Int): Student? {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             _unitOfWork.studentRepository.getById(id)
@@ -38,10 +50,10 @@ open class StudentController(
     }
 
     /**
-     * Adds a student to the repository and creates a student secret. If an error occurs a rollback happens otherwise a commit to the database
+     * Adds a Student to the student repository and creates a StudentSecret in the student secret repository. If an error occurs a rollback happens otherwise a commit to the database
      *
-     * @param entity as a student
-     * @return a student that has been added to the database
+     * @param entity Student
+     * @return the Student that has been added to the student repository
      * @throws DateTimeParseException
      */
     @Throws(DateTimeParseException::class)
@@ -69,11 +81,11 @@ open class StudentController(
     }
 
     /**
-     * Adds a list of students to the repository and creates their secrets. If an exception occurs, it will be cached.
-     * At the end all students where an error occurred are removed from the repository -> Partial rollback
+     * Adds a list of Students to the student repository and creates their StudentSecrets in the student secret repository. If an exception occurs, it will be cached.
+     * At the end all students where an error occurred are removed from the student repository -> Partial rollback
      *
-     * @param entities
-     * @return a list of students
+     * @param entities List of Students
+     * @return List of Secretaries that have been added to the repository
      * @throws MultiException
      */
     @Throws(MultiException::class)
@@ -118,24 +130,47 @@ open class StudentController(
         return result.await()
     }
 
+    /**
+     * Updates a Student entry in the student repository
+     *
+     * @param entity Student
+     * @return 1 if change was successful otherwise 0
+     */
     override suspend fun update(entity: Student): Int {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             _unitOfWork.studentRepository.update(entity)
         }
     }
 
+    /**
+     * Deletes a Student entry from the student repository
+     *
+     * @param entity Student
+     * @return 1 if deletion was successful otherwise 0
+     */
     override suspend fun delete(entity: Student): Int {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             _unitOfWork.studentRepository.delete(entity)
         }
     }
 
+    /**
+     * Deletes a Student by its id
+     *
+     * @param id of the Student entry
+     * @return 1 if deletion was successful otherwise 0
+     */
     override suspend fun deleteById(id: Int): Int {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             _unitOfWork.studentRepository.deleteById(id)
         }
     }
 
+    /**
+     * Deletes all entries from the student repository + resets the auto increment
+     *
+     * @return An integer representing the number of deletions
+     */
     override suspend fun deleteAll(): Int {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             val result = _unitOfWork.studentRepository.deleteAll()
