@@ -1,6 +1,6 @@
 package com.schulverwaltung.controller
 
-import com.schulverwaltung.MultiException
+import com.schulverwaltung.exceptions.MultiException
 import com.schulverwaltung.controller.interfaces.ISecretaryController
 import com.schulverwaltung.controller.interfaces.ISecretarySecretController
 import com.schulverwaltung.controller.interfaces.IStudentController
@@ -262,7 +262,7 @@ class StudentControllerTest : KoinTest {
     fun `Should delete all entries and reset the autoincrement`() = runBlocking {
         val studentController = get<IStudentController>()
 
-        var students = studentController.getAll()
+        val students = studentController.getAll()
         assertTrue(students.isEmpty())
 
 

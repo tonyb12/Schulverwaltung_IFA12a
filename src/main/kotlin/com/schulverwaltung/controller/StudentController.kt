@@ -1,6 +1,6 @@
 package com.schulverwaltung.controller
 
-import com.schulverwaltung.MultiException
+import com.schulverwaltung.exceptions.MultiException
 import com.schulverwaltung.controller.interfaces.IStudentController
 import com.schulverwaltung.dto.Student
 import com.schulverwaltung.dto.StudentSecret
