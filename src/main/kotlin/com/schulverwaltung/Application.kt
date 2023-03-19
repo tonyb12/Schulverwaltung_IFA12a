@@ -4,7 +4,9 @@ package com.schulverwaltung
 import com.schulverwaltung.controller.*
 import com.schulverwaltung.controller.interfaces.*
 import com.schulverwaltung.database.ExposedTransactionMiddleware
+import com.schulverwaltung.database.exposed.ExposedDb
 import com.schulverwaltung.database.interfaces.ITransactionMiddleware
+import com.schulverwaltung.database.objects.*
 import com.schulverwaltung.plugins.configureRouting
 import com.schulverwaltung.repository.*
 import com.schulverwaltung.repository.interfaces.*
@@ -23,6 +25,8 @@ import io.ktor.server.velocity.*
 import org.apache.velocity.app.event.implement.IncludeRelativePath
 import org.apache.velocity.runtime.RuntimeConstants
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -64,5 +68,11 @@ fun Application.module() {
     }
     install(Koin) {
         modules(prodDIModule)
+    }
+}
+
+fun Application.initDb() {
+    transaction(ExposedDb.connection) {
+        SchemaUtils.create(Students, Secretaries, SecretarySecrets, StudentSecrets, CsvImportHistories)
     }
 }
