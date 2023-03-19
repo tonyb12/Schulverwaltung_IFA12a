@@ -1,7 +1,6 @@
-package com.schulverwaltung.mocks.utils
+package com.schulverwaltung.utils
 
 import com.schulverwaltung.dto.Student
-import com.schulverwaltung.utils.CsvReader
 import org.junit.Test
 import org.koin.test.KoinTest
 import java.io.File
