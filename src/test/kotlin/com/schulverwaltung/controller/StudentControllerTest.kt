@@ -197,6 +197,62 @@ class StudentControllerTest : KoinTest {
     }
 
     @Test
+    fun `Should fail to add a student and its secret when the first name is empty`(): Unit = runBlocking {
+        val studentController = get<IStudentController>()
+
+        var students = studentController.getAll()
+        assertTrue(students.isEmpty())
+
+        val birthday = "20.12.2023"
+        assertFailsWith(
+            IllegalArgumentException::class,
+            block = {
+                studentController.add(
+                    Student(
+                        0,
+                        "",
+                        "Peter",
+                        "IT10",
+                        birthday,
+                        "test.test@gmail.com",
+                        "Fachinformatiker - Anwendungsentwicklung"
+                    )
+                )
+            })
+
+        students = studentController.getAll()
+        assertTrue(students.isEmpty())
+    }
+
+    @Test
+    fun `Should fail to add a student and its secret when the last name is empty`(): Unit = runBlocking {
+        val studentController = get<IStudentController>()
+
+        var students = studentController.getAll()
+        assertTrue(students.isEmpty())
+
+        val birthday = "20.12.2023"
+        assertFailsWith(
+            IllegalArgumentException::class,
+            block = {
+                studentController.add(
+                    Student(
+                        0,
+                        "Hans",
+                        "",
+                        "IT10",
+                        birthday,
+                        "test.test@gmail.com",
+                        "Fachinformatiker - Anwendungsentwicklung"
+                    )
+                )
+            })
+
+        students = studentController.getAll()
+        assertTrue(students.isEmpty())
+    }
+
+    @Test
     fun `Should add one student and its secret correctly and fail for the other one`(): Unit = runBlocking {
         val studentController = get<IStudentController>()
         val studentSecretController = get<IStudentSecretController>()

@@ -50,13 +50,14 @@ open class StudentController(
     }
 
     /**
-     * Adds a Student to the student repository and creates a StudentSecret in the student secret repository. If an error occurs a rollback happens otherwise a commit to the database
+     * Adds a Student to the student repository and creates a StudentSecret in the student secret repository.
+     * If an error occurs a rollback happens otherwise a commit to the database
      *
      * @param entity Student
      * @return the Student that has been added to the student repository
      * @throws DateTimeParseException
      */
-    @Throws(DateTimeParseException::class)
+    @Throws(DateTimeParseException::class, IllegalArgumentException::class)
     override suspend fun add(entity: Student): Student {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             try {
@@ -99,7 +100,7 @@ open class StudentController(
 
             val students = _unitOfWork.studentRepository.add(entities)
             val secretList = mutableListOf<ISecret>()
-            students.parallelStream().forEach {
+            students.forEach {
                 try {
                     val userName = _userNameGenerator.getUsername(it.firstName, it.surName, it.birthday)
                     secretList.add(
@@ -121,10 +122,13 @@ open class StudentController(
                 failedEntities.forEach {
                     _unitOfWork.studentRepository.deleteById(it)
                 }
-                throw MultiException(errorList)
             }
 
             _unitOfWork.commit()
+
+            if (errorList.isNotEmpty()) {
+                throw MultiException(errorList)
+            }
             return@newAsyncTransactionScope students
         }
         return result.await()
