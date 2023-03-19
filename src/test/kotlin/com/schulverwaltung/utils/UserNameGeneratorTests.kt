@@ -41,4 +41,24 @@ class UserNameGeneratorTests : KoinTest {
             block = { userNameGenerator.getUsername(firstName, lastName, birthday) }
         )
     }
+    @Test
+    fun `Should throw an error if the first name is empty`() {
+        val firstName = ""
+        val lastName = "Bui"
+        val birthday = "Nonsense"
+        assertFailsWith(
+            IllegalArgumentException::class,
+            block = { userNameGenerator.getUsername(firstName, lastName, birthday) }
+        )
+    }
+    @Test
+    fun `Should throw an error if the last name is empty`() {
+        val firstName = "Toan"
+        val lastName = ""
+        val birthday = "Nonsense"
+        assertFailsWith(
+            IllegalArgumentException::class,
+            block = { userNameGenerator.getUsername(firstName, lastName, birthday) }
+        )
+    }
 }

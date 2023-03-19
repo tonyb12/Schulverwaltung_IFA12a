@@ -50,13 +50,14 @@ open class StudentController(
     }
 
     /**
-     * Adds a Student to the student repository and creates a StudentSecret in the student secret repository. If an error occurs a rollback happens otherwise a commit to the database
+     * Adds a Student to the student repository and creates a StudentSecret in the student secret repository.
+     * If an error occurs a rollback happens otherwise a commit to the database
      *
      * @param entity Student
      * @return the Student that has been added to the student repository
      * @throws DateTimeParseException
      */
-    @Throws(DateTimeParseException::class)
+    @Throws(DateTimeParseException::class, IllegalArgumentException::class)
     override suspend fun add(entity: Student): Student {
         return _unitOfWork.transactionMiddleware.newTransactionScope {
             try {
