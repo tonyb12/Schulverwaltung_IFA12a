@@ -25,8 +25,14 @@ class UserNameGenerator(private val birthdayParser: IBirthdayParser) : IUserName
      * @return the concatenated name of the user
      * @throws DateTimeParseException
      */
-    @Throws(DateTimeParseException::class)
+    @Throws(DateTimeParseException::class, IllegalArgumentException::class)
     override fun getUsername(firstName: String, lastName: String, birthday: String): String {
+        if (firstName.isNullOrEmpty()) {
+            throw IllegalArgumentException("Firstname cannot be empty")
+        }
+        if(lastName.isNullOrEmpty()) {
+            throw IllegalArgumentException("Lastname cannot be null or empty")
+        }
         val newBirthday = birthdayParser.parse(birthday)
         return firstName.substring(0, 3) + lastName.substring(0, 3) + newBirthday
     }

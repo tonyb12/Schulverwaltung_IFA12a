@@ -88,7 +88,7 @@ open class SecretaryController(
             val failedEntities = mutableListOf<Int>()
             val secretaries = _unitOfWork.secretaryRepository.add(entities)
             val secretList = mutableListOf<ISecret>()
-            secretaries.parallelStream().forEach {
+            secretaries.forEach {
                 try {
                     secretList.add(
                         SecretarySecret(
@@ -104,13 +104,18 @@ open class SecretaryController(
                 }
             }
             _unitOfWork.secretarySecretRepository.add(secretList)
+
             if (failedEntities.isNotEmpty()) {
                 failedEntities.forEach {
                     _unitOfWork.secretaryRepository.deleteById(it)
                 }
+            }
+
+            _unitOfWork.commit()
+
+            if (errorList.isNotEmpty()) {
                 throw MultiException(errorList)
             }
-            _unitOfWork.commit()
             return@newAsyncTransactionScope secretaries
         }
         return result.await()
