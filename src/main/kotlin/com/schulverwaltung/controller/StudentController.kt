@@ -99,7 +99,7 @@ open class StudentController(
 
             val students = _unitOfWork.studentRepository.add(entities)
             val secretList = mutableListOf<ISecret>()
-            students.parallelStream().forEach {
+            students.forEach {
                 try {
                     val userName = _userNameGenerator.getUsername(it.firstName, it.surName, it.birthday)
                     secretList.add(
@@ -121,10 +121,13 @@ open class StudentController(
                 failedEntities.forEach {
                     _unitOfWork.studentRepository.deleteById(it)
                 }
-                throw MultiException(errorList)
             }
 
             _unitOfWork.commit()
+
+            if (errorList.isNotEmpty()) {
+                throw MultiException(errorList)
+            }
             return@newAsyncTransactionScope students
         }
         return result.await()
